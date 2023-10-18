@@ -30,23 +30,47 @@ function Login() {
   };
 
   return (
-    <div className="formLogin">
-      <h1>Login</h1>
-      <div>
-        <form action="" className="formBody" onSubmit={handleSubmit}>
-          <input
-            type="text"
-            placeholder="Usuario"
-            onChange={handleChangeUser}
-          />
-          <input
-            type="password"
-            placeholder="Contraseña"
-            onChange={handleChangePassword}
-          />
-          <button>Iniciar</button>
+    <div className="flex items-center justify-center min-h-screen backdrop-blur-sm  ">
+
+    <div className="flex min-h-lg w-96  flex-col justify-center px-6 py-12 lg:px-8 rounded-lg shadow-[0_35px_60px_-15px_rgba(0,0,0,0.8)] bg-gradient-to-r from-cyan-500 to-blue-500 ">
+      <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+        <h1 className="mt-10 text-center text-4xl font-bold leading-9 tracking-tight text-white">
+          Login
+        </h1>
+      </div>
+
+      <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+        <form action="" className="space-y-6" onSubmit={handleSubmit}>
+          <div className="mt-2">
+            <input
+              className="appearance-none bg-transparent border-b-2 w-full text-white mr-3 placeholder:text-white py-1 px-2 leading-tight focus:outline-none" 
+              type="text"
+              placeholder="Usuario"
+              onChange={handleChangeUser}
+            />
+          </div>
+
+          <div className="mt-2">
+            <input
+              className="appearance-none bg-transparent border-b-2 w-full text-white mr-3 placeholder:text-white py-1 px-2 leading-tight focus:outline-none "
+              type="password"
+              placeholder="Contraseña"
+              onChange={handleChangePassword}
+            />
+          </div>
+          
+
+          <div className="">
+            <button className="flex w-full justify-center rounded-md bg-white px-3 py-1.5 text-sm font-semibold leading-6 text-black font-bold shadow-sm hover:bg-emerald-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600  transition transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
+              Iniciar
+            </button>
+            
+  
+         
+          </div>
         </form>
       </div>
+    </div>
     </div>
   );
 }
