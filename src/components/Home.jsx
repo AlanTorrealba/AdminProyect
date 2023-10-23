@@ -1,47 +1,26 @@
 import React from "react";
-
-// const people = [
-//   {
-//     name: 'Calvin Hawkins',
-//     email: 'calvin.hawkins@example.com',
-//     image:
-//       'https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-//   },
-//   {
-//     name: 'Kristen Ramos',
-//     email: 'kristen.ramos@example.com',
-//     image:
-//       'https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-//   },
-//   {
-//     name: 'Ted Fox',
-//     email: 'ted.fox@example.com',
-//     image:
-//       'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-//   },
-// ]
-
+import { useNavigate } from "react-router-dom";
+import {AsideBar, SidebarItem} from "./AsideBar";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { icon } from '@fortawesome/fontawesome-svg-core/import.macro'
 function Home() {
+  const navigate = useNavigate();
+  const handleClickLogout = () => {
+    window.localStorage.removeItem("user"), navigate("/");
+  };
   return (
-    //   <ul className="divide-y divide-gray-200">
-    //   {people.map((person) => (
-    //     <li key={person.email} className="py-4 flex">
-    //       <img className="h-10 w-10 rounded-full" src={person.image} alt="" />
-    //       <div className="ml-3">
-    //         <p className="text-sm font-medium text-gray-900">{person.name}</p>
-    //         <p className="text-sm text-gray-500">{person.email}</p>
-    //       </div>
-    //     </li>
-    //   ))}
-    // </ul>
-
+    
     <div>
-      <div className="grid grid-cols-1 w-full">
-        <div className="bg-red-500">A</div>
-      </div>
-      <div className="grid grid-cols-2 gap-1">
-      <div className="bg-cyan-500 h-screen w-56 m-0">b</div>
-      <div className="bg-white h-screen m-0">conten</div>
+      <div className="grid grid-cols-12">
+        <div className="bg-cyan-500 col-span-2 h-screen"><AsideBar><SidebarItem  icon={<FontAwesomeIcon icon={icon({name: 'coffee', style: 'regular'})} /> } text="Inicio"/></AsideBar></div>
+       <div className="col-start-12 mt-2">
+       <button
+            className=" w-34 justify-center rounded-md bg-teal-500 text-white px-3 py-1.5 text-sm font-semibold leading-6  shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600  transition transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none "
+            onClick={handleClickLogout}
+          >
+            Logout
+          </button>
+       </div>
       </div>
     </div>
   );

@@ -2,10 +2,10 @@ import {  Navigate, Outlet } from "react-router-dom";
 import useAuthStore from "../context/authStore";
 
 function PrivateRoute({ children, ...props }) {
-    const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
-  
-    console.log(isAuthenticated)
-  if(!isAuthenticated){
+    
+    const turnFromLocalStorage = window.localStorage.getItem("user");
+    console.log(turnFromLocalStorage)
+  if(!turnFromLocalStorage){
     return <Navigate to="/" replace/>
   }
 
