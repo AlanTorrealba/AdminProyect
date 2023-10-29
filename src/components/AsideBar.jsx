@@ -1,26 +1,28 @@
 
 import { useContext, createContext, useState } from "react"
 const SidebarContext = createContext()
+import { FaChevronRight } from "react-icons/fa";
+import { FaChevronLeft } from "react-icons/fa";
 
 export function AsideBar({ children }) {
   const [expanded, setExpanded] = useState(true)
   
   return (
     <aside className="h-screen">
-      <nav className="h-full flex flex-col bg-white border-r shadow-sm">
+      <nav className="h-full flex flex-col shadow-[0_35px_60px_-15px_rgba(0,0,0,0.8)] bg-white">
         <div className="p-4 pb-2 flex justify-between items-center">
-          <img
-            src="https://img.logoipsum.com/243.svg"
-            className={`overflow-hidden transition-all ${
-              expanded ? "w-32" : "w-0"
+        {/* <img
+            src="/leon2.jpg"
+            className={`overflow-hidden transition-all  ${
+              expanded ? "w-20" : "w-0"
             }`}
             alt=""
-          />
+          /> */}
           <button
             onClick={() => setExpanded((curr) => !curr)}
             className="p-1.5 rounded-lg bg-gray-50 hover:bg-gray-100"
           >
-            {expanded ? "A" : "b"}
+            {expanded ? <FaChevronLeft/> : <FaChevronRight/>}
           </button>
         </div>
 
@@ -30,7 +32,7 @@ export function AsideBar({ children }) {
 
         <div className="border-t flex p-3">
           <img
-            src="https://ui-avatars.com/api/?background=c7d2fe&color=3730a3&bold=true"
+          src="/leon.jpg"
             alt=""
             className="w-10 h-10 rounded-md"
           />
@@ -71,7 +73,7 @@ export function SidebarItem({ icon, text, active, alert }) {
       {icon}
       <span
         className={`overflow-hidden transition-all ${
-          expanded ? "w-52 ml-3" : "w-0"
+          expanded ? "w-48 ml-3" : "w-0"
         }`}
       >
         {text}
