@@ -1,17 +1,22 @@
-
-import { useContext, createContext, useState } from "react"
-const SidebarContext = createContext()
+import { useContext, createContext, useState } from "react";
+const SidebarContext = createContext();
 import { FaChevronRight } from "react-icons/fa";
 import { FaChevronLeft } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+import { FaPowerOff } from "react-icons/fa";
 
 export function AsideBar({ children }) {
-  const [expanded, setExpanded] = useState(true)
-  
+  const [expanded, setExpanded] = useState(true);
+  const navigate = useNavigate();
+  const handleClickLogout = () => {
+    window.localStorage.removeItem("user"), navigate("/");
+  };
+
   return (
     <aside className="h-screen">
       <nav className="h-full flex flex-col shadow-[0_35px_60px_-15px_rgba(0,0,0,0.8)] bg-slate-700">
         <div className="p-4 pb-2 flex justify-end items-center">
-        {/* <img
+          {/* <img
             src="/leon2.jpg"
             className={`overflow-hidden transition-all  ${
               expanded ? "w-20" : "w-0"
@@ -22,7 +27,7 @@ export function AsideBar({ children }) {
             onClick={() => setExpanded((curr) => !curr)}
             className="p-1.5 rounded-lg bg-gray-500 hover:bg-white"
           >
-            {expanded ? <FaChevronLeft/> : <FaChevronRight/>}
+            {expanded ? <FaChevronLeft /> : <FaChevronRight />}
           </button>
         </div>
 
@@ -30,12 +35,12 @@ export function AsideBar({ children }) {
           <ul className="flex-1 px-3">{children}</ul>
         </SidebarContext.Provider>
 
-        <div className="border-t flex p-3">
-          <img
-          src="/leon.jpg"
-            alt=""
-            className="w-10 h-10 rounded-md"
+          <FaPowerOff
+            className="h-6 w-6 justify-center leading-6  hover:text-red-500 transition transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none"
+            onClick={handleClickLogout}
           />
+        <div className="border-t flex p-3">
+          <img src="/leon.jpg" alt="" className="w-10 h-10 rounded-md" />
           <div
             className={`
               flex justify-between items-center
@@ -44,19 +49,19 @@ export function AsideBar({ children }) {
           >
             <div className="leading-4">
               <h4 className="font-semibold">Antt</h4>
-              <span className="text-xs text-white">alan@gmail.com</span>
+              <span className="text-xs text-white">antorrealbatapia@gmail.com</span>
             </div>
-             {/* <BeakerIcon size={20} />  */}
+            {/* <BeakerIcon size={20} />  */}
           </div>
         </div>
       </nav>
     </aside>
-  )
+  );
 }
 
 export function SidebarItem({ icon, text, active, alert }) {
-  const { expanded } = useContext(SidebarContext)
-  
+  const { expanded } = useContext(SidebarContext);
+
   return (
     <li
       className={`
@@ -99,5 +104,5 @@ export function SidebarItem({ icon, text, active, alert }) {
         </div>
       )}
     </li>
-  )
+  );
 }
