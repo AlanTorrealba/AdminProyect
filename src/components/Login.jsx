@@ -83,7 +83,7 @@ function Login() {
             </div>
 
             <div className="">
-              <button className="flex w-full justify-center rounded-md bg-white px-3 py-1.5 text-sm font-semibold leading-6 text-black font-bold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600  transition transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
+              <button className="flex w-full justify-center rounded-md bg-white px-3 py-1.5 text-sm font-semibold leading-6 text-black  shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600  transition transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
                 Iniciar
               </button>
             </div>

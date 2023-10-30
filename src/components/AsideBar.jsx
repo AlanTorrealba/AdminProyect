@@ -9,8 +9,8 @@ export function AsideBar({ children }) {
   
   return (
     <aside className="h-screen">
-      <nav className="h-full flex flex-col shadow-[0_35px_60px_-15px_rgba(0,0,0,0.8)] bg-white">
-        <div className="p-4 pb-2 flex justify-between items-center">
+      <nav className="h-full flex flex-col shadow-[0_35px_60px_-15px_rgba(0,0,0,0.8)] bg-slate-700">
+        <div className="p-4 pb-2 flex justify-end items-center">
         {/* <img
             src="/leon2.jpg"
             className={`overflow-hidden transition-all  ${
@@ -20,7 +20,7 @@ export function AsideBar({ children }) {
           /> */}
           <button
             onClick={() => setExpanded((curr) => !curr)}
-            className="p-1.5 rounded-lg bg-gray-50 hover:bg-gray-100"
+            className="p-1.5 rounded-lg bg-gray-500 hover:bg-white"
           >
             {expanded ? <FaChevronLeft/> : <FaChevronRight/>}
           </button>
@@ -44,7 +44,7 @@ export function AsideBar({ children }) {
           >
             <div className="leading-4">
               <h4 className="font-semibold">Antt</h4>
-              <span className="text-xs text-gray-600">alan@gmail.com</span>
+              <span className="text-xs text-white">alan@gmail.com</span>
             </div>
              {/* <BeakerIcon size={20} />  */}
           </div>
@@ -66,7 +66,7 @@ export function SidebarItem({ icon, text, active, alert }) {
         ${
           active
             ? "bg-gradient-to-tr from-indigo-200 to-indigo-100 text-indigo-800"
-            : "hover:bg-indigo-50 text-gray-600"
+            : "hover:bg-gray-950 text-gray-200"
         }
     `}
     >

@@ -4,7 +4,6 @@ import useAuthStore from "../context/authStore";
 function PrivateRoute({ children, ...props }) {
     
     const turnFromLocalStorage = window.localStorage.getItem("user");
-    console.log(turnFromLocalStorage)
   if(!turnFromLocalStorage){
     return <Navigate to="/" replace/>
   }
