@@ -1,12 +1,12 @@
-import { useContext, createContext, useState } from "react";
-const SidebarContext = createContext();
 import { FaChevronRight } from "react-icons/fa";
 import { FaChevronLeft } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { FaPowerOff } from "react-icons/fa";
+import useSidebarStore from "../context/sideBarExpanden";
 
 export function AsideBar({ children }) {
-  const [expanded, setExpanded] = useState(true);
+  const expanded = useSidebarStore((state) => state.expanded);
+  const toggleExpanded = useSidebarStore((state) => state.toggleExpanded);
   const navigate = useNavigate();
   const handleClickLogout = () => {
     window.localStorage.removeItem("user"), navigate("/");
@@ -24,32 +24,34 @@ export function AsideBar({ children }) {
             alt=""
           /> */}
           <button
-            onClick={() => setExpanded((curr) => !curr)}
+            onClick={toggleExpanded}
             className="p-1.5 rounded-lg bg-gray-500 hover:bg-white"
           >
             {expanded ? <FaChevronLeft /> : <FaChevronRight />}
           </button>
         </div>
 
-        <SidebarContext.Provider value={{ expanded }}>
+        
           <ul className="flex-1 px-3">{children}</ul>
-        </SidebarContext.Provider>
+        
 
-          <FaPowerOff
-            className="h-6 w-6 justify-center leading-6  hover:text-red-500 transition transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none"
-            onClick={handleClickLogout}
-          />
+        <FaPowerOff
+          className="h-6 w-6 justify-center leading-6  hover:text-red-500 transition transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none"
+          onClick={handleClickLogout}
+        />
         <div className="border-t flex p-3">
           <img src="/leon.jpg" alt="" className="w-10 h-10 rounded-md" />
           <div
             className={`
               flex justify-between items-center
-              overflow-hidden transition-all ${expanded ? "w-52 ml-3" : "w-0"}
+              overflow-hidden transition-all ${expanded ? "w-36 ml-3" : "w-0"}
           `}
           >
             <div className="leading-4">
               <h4 className="font-semibold">Antt</h4>
-              <span className="text-xs text-white">antorrealbatapia@gmail.com</span>
+              <span className="text-xs text-white">
+                antorrealbatapia@gmail.com
+              </span>
             </div>
             {/* <BeakerIcon size={20} />  */}
           </div>
@@ -60,7 +62,7 @@ export function AsideBar({ children }) {
 }
 
 export function SidebarItem({ icon, text, active, alert }) {
-  const { expanded } = useContext(SidebarContext);
+  const expanded = useSidebarStore((state) => state.expanded);
 
   return (
     <li
@@ -78,7 +80,7 @@ export function SidebarItem({ icon, text, active, alert }) {
       {icon}
       <span
         className={`overflow-hidden transition-all ${
-          expanded ? "w-48 ml-3" : "w-0"
+          expanded ? "w-36 ml-3" : "w-0"
         }`}
       >
         {text}

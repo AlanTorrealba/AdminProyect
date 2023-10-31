@@ -6,7 +6,7 @@ function Home() {
     window.localStorage.removeItem("user"), navigate("/");
   };
   return (
-    <div className="col-start-12  mt-2">
+    <div className="">
     <h1>Home</h1>
     </div>
   );
