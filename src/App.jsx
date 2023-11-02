@@ -12,16 +12,15 @@ function App() {
     window.localStorage.removeItem("user"), navigate("/");
   };
   return (
-    <div className="">
-      <div className={`${!isLogin ? "flex " : ""}`}>
+    <div className="h-screen flex">
         {isLogin ? null : (
-          <div className="inline-block ">
+          <div className="inline-block">
             <AsideBar>
               <ItemsSideBar />
             </AsideBar>
           </div>
         )}
-        <div className="flex-row flex-1 ">
+        <div id="4" className="flex flex-col flex-1 ">
           {isLogin ? null : (
             <div className="transition-all h-10 flex justify-between items-center p-5">
               <input
@@ -38,23 +37,19 @@ function App() {
             </div>
           )}
 
-          <div id="4"
+          <div
             className={`${
-              !isLogin ? "flex justify-center h-5/6 bg-indigo-400" : ""
+              !isLogin ? "flex-grow overflow-y-auto" : ""
             }`}
           >
-            <div className={`${!isLogin ? "container " : ""}`}>
-              <div
-                className={`${
-                  !isLogin ? "grid grid-cols-12 grid-rows-6 h-full " : ""
-                }`}
-              >
+            <div className={`${!isLogin ? "h-full" : ""}`}>
+             
                 <MyRoutes />
-              </div>
+              
             </div>
           </div>
         </div>
-      </div>
+      
     </div>
   );
 }
