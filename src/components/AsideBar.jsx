@@ -1,16 +1,11 @@
 import { FaChevronRight } from "react-icons/fa";
 import { FaChevronLeft } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
-import { FaPowerOff } from "react-icons/fa";
+
 import useSidebarStore from "../context/sideBarExpanden";
 
 export function AsideBar({ children }) {
   const expanded = useSidebarStore((state) => state.expanded);
   const toggleExpanded = useSidebarStore((state) => state.toggleExpanded);
-  const navigate = useNavigate();
-  const handleClickLogout = () => {
-    window.localStorage.removeItem("user"), navigate("/");
-  };
 
   return (
     <aside className="h-screen">
@@ -31,20 +26,14 @@ export function AsideBar({ children }) {
           </button>
         </div>
 
-        
-          <ul className="flex-1 px-3">{children}</ul>
-        
+        <ul className="flex-1 px-3">{children}</ul>
 
-        <FaPowerOff
-          className="h-6 w-6 justify-center leading-6  hover:text-red-500 transition transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none"
-          onClick={handleClickLogout}
-        />
         <div className="border-t flex p-3">
           <img src="/leon.jpg" alt="" className="w-10 h-10 rounded-md" />
           <div
             className={`
               flex justify-between items-center
-              overflow-hidden transition-all ${expanded ? "w-36 ml-3" : "w-0"}
+              overflow-hidden transition-all ${expanded ? "w-40 ml-3" : "w-0"}
           `}
           >
             <div className="leading-4">

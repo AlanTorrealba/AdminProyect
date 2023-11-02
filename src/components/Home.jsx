@@ -6,7 +6,7 @@ function Home() {
     window.localStorage.removeItem("user"), navigate("/");
   };
   return (
-    <div className="">
+    <div className="basis-full">
     <h1>Home</h1>
     </div>
   );
