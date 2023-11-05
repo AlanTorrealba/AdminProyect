@@ -2,7 +2,7 @@ import { useState } from "react";
 import { UseloginValidation } from "../hooks/UseloginValidation";
 import { useNavigate } from "react-router-dom";
 import useAuthStore from "../context/authStore";
-
+import {Button} from "@nextui-org/react";
 import Swal from "sweetalert2";
 
 function Login() {
@@ -81,11 +81,11 @@ function Login() {
                 onChange={handleChangePassword}
               />
             </div>
-
+           
             <div className="">
-              <button className="flex w-full justify-center rounded-md bg-white px-3 py-1.5 text-sm font-semibold leading-6 text-black  shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600  transition transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
+              <Button type="submit" className="flex w-full justify-center bg-white px-3 py-1.5 text-sm font-semibold leading-6 text-black overflow-visible rounded-full hover:-translate-y-1  shadow-xl bg-background/30 after:content-[''] after:absolute after:rounded-full after:inset-0 after:bg-background/40 after:z-[-1] after:transition after:!duration-500 hover:after:scale-150 hover:after:opacity-0">
                 Iniciar
-              </button>
+              </Button>
             </div>
           </form>
         </div>

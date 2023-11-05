@@ -4,6 +4,8 @@ import { AsideBar } from "./components/AsideBar";
 import ItemsSideBar from "./components/ItemsSideBar";
 import { useNavigate } from "react-router-dom";
 import { FaPowerOff } from "react-icons/fa";
+
+
 function App() {
   const location = useLocation();
   const isLogin = location.pathname === "/";
@@ -12,6 +14,7 @@ function App() {
     window.localStorage.removeItem("user"), navigate("/");
   };
   return (
+   
     <div className="h-screen flex">
         {isLogin ? null : (
           <div className="inline-block">
@@ -51,6 +54,7 @@ function App() {
         </div>
       
     </div>
+   
   );
 }
 
