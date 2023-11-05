@@ -10,7 +10,7 @@ useEffect(() => {
   }, tiempo);
 
   return () => clearInterval(interval);
-}, []);
+},[]);
     
   return (
     <Card className="w-60 h-48 bg-gradient-to-br from-sky-500 to-purple-700 ml-10 overflow-hidden">
