@@ -24,6 +24,7 @@ function Login() {
     event.preventDefault();
     try {
       const loginResult = await UseloginValidation({ userName, password });
+      console.log(loginResult)
       loginResult
         ? (login(),
           window.localStorage.setItem("user", JSON.stringify("true")),
@@ -83,7 +84,7 @@ function Login() {
             </div>
            
             <div className="">
-              <Button type="submit" className="flex w-full justify-center bg-white px-3 py-1.5 text-sm font-semibold leading-6 text-black overflow-visible rounded-full hover:-translate-y-1  shadow-xl bg-background/30 after:content-[''] after:absolute after:rounded-full after:inset-0 after:bg-background/40 after:z-[-1] after:transition after:!duration-500 hover:after:scale-150 hover:after:opacity-0">
+              <Button type="submit" className="flex w-full justify-center bg-white px-3 py-1.5 text-sm font-bold leading-6 text-white overflow-visible rounded-full hover:-translate-y-1  shadow-xl bg-background/30 after:content-[''] after:absolute after:rounded-full after:inset-0 after:bg-background/40 after:z-[-1] after:transition after:!duration-500 hover:after:scale-150 hover:after:opacity-0">
                 Iniciar
               </Button>
             </div>

@@ -18,7 +18,7 @@ useEffect(() => {
       <CircularProgress
         classNames={{
           svg: "w-36 h-36 drop-shadow-md",
-          indicator: value < 90 ? "stroke-white" : "stroke-danger",
+          indicator: value < 50 ? "stroke-white" : "stroke-danger",
           track: "stroke-white/10",
           value: "text-3xl font-semibold text-white",
         }}

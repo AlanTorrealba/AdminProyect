@@ -10,6 +10,13 @@ function ItemsSideBar() {
         text="Inicio"
         />
         </Link>
+        <Link to="/pedidos">
+      <SidebarItem
+        icon={<FaList icon={{ name: "coffee", style: "regular" }} />}
+        text="Pedidos"
+        />
+        </Link>
+
         <Link to="/grafic">
 
       <SidebarItem
@@ -25,6 +32,7 @@ function ItemsSideBar() {
         icon={<FaHome icon={{ name: "coffee", style: "regular" }} />}
         text="Inicio"
       />
+    
     </>
   );
 }
