@@ -20,8 +20,28 @@ const usePedidos = () => {
   
       fetchData();
     }, []);
-  console.log(pedidos)
-    return { pedidos, loading, error };
+
+
+    const postData = async (data) => {
+      try {
+        const response = await axios.post(baseUrl, {
+          params: data,
+        });
+        return response.data
+        }catch (error) {
+        setError(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+
+
+
+
+
+
+    return { pedidos, loading, error, postData };
   };
   
   export default usePedidos;

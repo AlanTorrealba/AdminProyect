@@ -20,7 +20,6 @@ const useClients = () => {
   
       fetchData();
     }, []);
-  
     return { cliente, loading, error };
   };
   

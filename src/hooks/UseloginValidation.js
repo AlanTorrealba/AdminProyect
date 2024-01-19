@@ -9,7 +9,6 @@ export async function UseloginValidation({userName, password}) {
           params: { username: userName, password: password },
         });
     
-        console.log(response.data);
         if( response.data.length !== 0 ){
           return true
         } 

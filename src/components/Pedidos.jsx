@@ -1,7 +1,9 @@
 import { useEffect, useState, useMemo } from "react";
 import { FaTrash, FaEdit, FaList, FaPlus } from "react-icons/fa";
 import usePedidos from "../hooks/usePedidos";
-
+import useClients from "../hooks/useClients";
+import Swal from "sweetalert2";
+import { useForm } from "react-hook-form";
 import {
   Table,
   TableHeader,
@@ -13,12 +15,26 @@ import {
   Button,
   Tooltip,
   useDisclosure,
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Input,
+  Select,
+  SelectItem,
 } from "@nextui-org/react";
 import ModalClient from "./ModalClient";
 
 function Pedidos() {
-  const { pedidos, loading, error } = usePedidos();
-
+  const {
+    reset,
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  const { pedidos, loading, error, postData } = usePedidos();
+  const { cliente } = useClients();
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
   const [page, setPage] = useState(1);
   const rowsPerPage = 10;
@@ -30,6 +46,33 @@ function Pedidos() {
     return pedidos.slice(start, end);
   }, [page, pedidos]);
 
+  const onSubmit = handleSubmit(async (data) => {
+    const pedidosResult = await postData(data);
+    console.log(pedidosResult);
+    pedidosResult
+      ? (reset(),
+        onClose(),
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "exito al crear pedido",
+          showConfirmButton: false,
+          timer: 1500,
+          timerProgressBar: true,
+          toast: true,
+          background: "#ffff",
+        }))
+      : Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: "error al crear pedido",
+          showConfirmButton: false,
+          timer: 1500,
+          timerProgressBar: true,
+          toast: true,
+          background: "#ffff",
+        });
+  });
   if (loading) {
     return <p>Cargando...</p>;
   }
@@ -122,57 +165,62 @@ function Pedidos() {
         </Table>
       </div>
 
-      <ModalClient
+      {/* <ModalClient
         isOpen={isOpen}
         onOpen={onOpen}
         onClose={onClose}
         onOpenChange={onOpenChange}
-      />
+      /> */}
 
-      {/* <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="top-center">
+      <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="top-center">
         <ModalContent>
           {(onClose) => (
             <>
-              <ModalHeader className="flex flex-col gap-1">
-                Crear pedido
-              </ModalHeader>
-              <ModalBody>
-                <Select
-                  // endContent={
-                  //   <FaRegEnvelopeOpen className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
-                  // }
-                  label="Cliente"
-                  placeholder="Seleccione un cliente"
-                  variant="bordered"
-                >
-                  {cliente.map((cliente) => (
-                    <SelectItem
-                      key={cliente.cliente_id}
-                      value={cliente.cliente_id}
-                    >
-                      {cliente.nombre}
-                    </SelectItem>
-                  ))}
-                </Select>
-                <Input
-                  endContent={
-                    <FaRegEnvelopeOpen className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
-                  }
-                  label="Cliente"
-                  placeholder="Enter your password"
-                  type="password"
-                  variant="bordered"
-                />
-              </ModalBody>
-              <ModalFooter>
-                <Button color="primary" variant="flat">
-                  Guardar
-                </Button>
-              </ModalFooter>
+              <form method="post" onSubmit={onSubmit}>
+                <ModalHeader className="flex flex-col gap-1">
+                  Crear pedido
+                </ModalHeader>
+                <ModalBody>
+                  <Select
+                    {...register("cliente", { required: true })}
+                    label="Cliente"
+                    placeholder="Seleccione un cliente"
+                    variant="bordered"
+                  >
+                    {cliente.map((cliente) => (
+                      <SelectItem
+                        key={cliente.cliente_id}
+                        value={cliente.cliente_id}
+                      >
+                        {cliente.nombre}
+                      </SelectItem>
+                    ))}
+                  </Select>
+                  <Input
+                    {...register("repartidor")}
+                    label="Repartidor"
+                    placeholder="seleccione un repartidor"
+                    type="text"
+                    variant="bordered"
+                  />
+                  <Input
+                    {...register("usuario")}
+                    label="Usuario"
+                    placeholder="Seleccione el usuario"
+                    type="text"
+                    variant="bordered"
+                  />
+                </ModalBody>
+                <ModalFooter>
+                  <Button type="submit" color="primary" variant="flat">
+                    Guardar
+                  </Button>
+                </ModalFooter>
+              </form>
             </>
           )}
         </ModalContent>
-      </Modal> */}
+      </Modal>
     </div>
   );
 }

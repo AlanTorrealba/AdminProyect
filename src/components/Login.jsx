@@ -24,7 +24,6 @@ function Login() {
     event.preventDefault();
     try {
       const loginResult = await UseloginValidation({ userName, password });
-      console.log(loginResult)
       loginResult
         ? (login(),
           window.localStorage.setItem("user", JSON.stringify("true")),
