@@ -13,17 +13,21 @@ import {
   SelectItem,
 } from "@nextui-org/react";
 
-function ModalClient({ isOpen, onOpen, onClose, onOpenChange }) {
+function ModalClient({
+  isOpen,
+  onOpen,
+  onClose,
+  onOpenChange,
+  register,
+  onSubmit,
+}) {
   const { cliente } = useClients();
 
-  const hola = () => {
-    console.log("hola");
-  };
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log("hola");
+
     try {
-      console.log("hola");
+      onSubmit();
     } catch (error) {
       console.log(error);
     }
@@ -44,6 +48,7 @@ function ModalClient({ isOpen, onOpen, onClose, onOpenChange }) {
                     // endContent={
                     //   <FaRegEnvelopeOpen className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
                     // }
+                    {...register("cliente")}
                     label="Cliente"
                     placeholder="Seleccione un cliente"
                     variant="bordered"
@@ -58,12 +63,17 @@ function ModalClient({ isOpen, onOpen, onClose, onOpenChange }) {
                     ))}
                   </Select>
                   <Input
-                    endContent={
-                      <FaRegEnvelopeOpen className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
-                    }
-                    label="Cliente"
-                    placeholder="Enter your password"
-                    type="password"
+                    {...register("repartidor")}
+                    label="Repartidor"
+                    placeholder="seleccione un repartidor"
+                    type="text"
+                    variant="bordered"
+                  />
+                  <Input
+                    {...register("usuario")}
+                    label="Usuario"
+                    placeholder="Seleccione el usuario"
+                    type="text"
                     variant="bordered"
                   />
                 </form>
@@ -73,7 +83,7 @@ function ModalClient({ isOpen, onOpen, onClose, onOpenChange }) {
                   type="submit"
                   color="primary"
                   variant="flat"
-                  onClick={hola()}
+                  onClick={handleSubmit}
                 >
                   Guardar
                 </Button>
