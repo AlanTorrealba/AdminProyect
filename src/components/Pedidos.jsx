@@ -1,5 +1,5 @@
 import { useEffect, useState, useMemo } from "react";
-import { FaTrash, FaEdit, FaList, FaPlus } from "react-icons/fa";
+import { FaTrash, FaEdit, FaList, FaPlus, FaRecycle } from "react-icons/fa";
 import usePedidos from "../hooks/usePedidos";
 import Swal from "sweetalert2";
 import CardBar from "./CardBar";
@@ -16,6 +16,7 @@ import {
   Tooltip,
   useDisclosure,
   Spinner,
+  Skeleton,
 } from "@nextui-org/react";
 import ModalClient from "./ModalClient";
 
@@ -166,18 +167,33 @@ function Pedidos() {
                             <FaEdit />
                           </span>
                         </Tooltip>
-                        <Tooltip
-                          className="text-white"
-                          color="danger"
-                          content="Borrar"
-                        >
-                          <span
-                            onClick={() => handlerDelete(pedido.pedido_id)}
-                            className="text-lg text-danger cursor-pointer active:opacity-50"
+                        {(pedido.estatus == 1) ? (
+                          <Tooltip
+                            className="text-white"
+                            color="danger"
+                            content="Borrar"
                           >
-                            <FaTrash />
-                          </span>
-                        </Tooltip>
+                            <span
+                              onClick={() => handlerDelete(pedido.pedido_id)}
+                              className="text-lg text-danger cursor-pointer active:opacity-50"
+                            >
+                              <FaTrash />
+                            </span>
+                          </Tooltip>
+                        ) : (
+                          <Tooltip
+                            className="text-white"
+                            color="primary"
+                            content="reciclar"
+                          >
+                            <span
+                              onClick={() => handlerDelete(pedido.pedido_id)}
+                              className="text-lg text-primary-400 cursor-pointer active:opacity-50"
+                            >
+                              <FaRecycle />
+                            </span>
+                          </Tooltip>
+                        )}
                       </div>
                     </TableCell>
                   </TableRow>

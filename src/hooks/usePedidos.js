@@ -18,9 +18,7 @@ const usePedidos = () => {
     } catch (error) {
       setError(error);
     } finally {
-      setTimeout(() => {
-        setLoading(false);
-      }, 2000);
+      setLoading(false);
     }
   };
 
@@ -34,7 +32,7 @@ const usePedidos = () => {
       const response = await axios.post(baseUrl, {
         params: data,
       });
-      console.log(response)
+      console.log(response);
       if (response.data.success) {
         console.log(
           "Inserción exitosa. ID del nuevo registro:",
@@ -50,10 +48,7 @@ const usePedidos = () => {
       console.error("Error en la solicitud:", error);
       return error;
     } finally {
-      setTimeout(() => {
-        setLoading(false);
-      }, 2000);
-     
+      setLoading(false);
     }
   };
 

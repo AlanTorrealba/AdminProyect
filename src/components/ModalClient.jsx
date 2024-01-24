@@ -1,6 +1,6 @@
 import React from "react";
 import useClients from "../hooks/useClients";
-import { FaRegEnvelopeOpen } from "react-icons/fa";
+import useRepartidor from "../hooks/useRepartidor";
 import {
   Button,
   Modal,
@@ -22,6 +22,7 @@ function ModalClient({
   onSubmit,
 }) {
   const { cliente } = useClients();
+  const { repartidor } = useRepartidor();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -62,13 +63,22 @@ function ModalClient({
                       </SelectItem>
                     ))}
                   </Select>
-                  <Input
+                  <Select
                     {...register("repartidor")}
                     label="Repartidor"
-                    placeholder="seleccione un repartidor"
-                    type="text"
+                    placeholder="Seleccione un repartidor"
                     variant="bordered"
-                  />
+                  >
+                    {repartidor.map((repartidor) => (
+                      <SelectItem
+                        key={repartidor.repartidor_id}
+                        value={repartidor.repartidor_id}
+                      >
+                        {repartidor.nombre}
+                      </SelectItem>
+                    ))}
+                  </Select>
+
                   <Input
                     {...register("usuario")}
                     label="Usuario"
