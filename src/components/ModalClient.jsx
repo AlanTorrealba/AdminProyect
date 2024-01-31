@@ -20,10 +20,10 @@ function ModalClient({
   onOpenChange,
   register,
   onSubmit,
+  evento,
 }) {
   const { cliente } = useClients();
   const { repartidor } = useRepartidor();
-
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -41,14 +41,11 @@ function ModalClient({
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1">
-                Crear pedido
+                {evento ? "Editar" : "Crear"} pedido
               </ModalHeader>
               <ModalBody>
                 <form onSubmit={handleSubmit}>
                   <Select
-                    // endContent={
-                    //   <FaRegEnvelopeOpen className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
-                    // }
                     {...register("cliente")}
                     label="Cliente"
                     placeholder="Seleccione un cliente"

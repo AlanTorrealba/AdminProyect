@@ -2,7 +2,6 @@ import { useEffect, useState, useMemo } from "react";
 import { FaTrash, FaEdit, FaList, FaPlus, FaRecycle } from "react-icons/fa";
 import usePedidos from "../hooks/usePedidos";
 import Swal from "sweetalert2";
-import CardBar from "./CardBar";
 import { useForm } from "react-hook-form";
 import {
   Table,
@@ -16,7 +15,6 @@ import {
   Tooltip,
   useDisclosure,
   Spinner,
-  Skeleton,
 } from "@nextui-org/react";
 import ModalClient from "./ModalClient";
 
@@ -31,6 +29,7 @@ function Pedidos() {
     usePedidos();
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
   const [page, setPage] = useState(1);
+  const [event, setEvent] = useState(false);
   const rowsPerPage = 10;
   const pages = Math.ceil(pedidos.length / rowsPerPage);
 
@@ -43,7 +42,6 @@ function Pedidos() {
   // ...
   const onSubmit = handleSubmit(async (data) => {
     const pedidosResult = await postData(data);
-    console.log(pedidosResult);
     pedidosResult.success
       ? (reset(),
         onClose(),
@@ -94,6 +92,11 @@ function Pedidos() {
           toast: true,
           background: "#ffff",
         });
+  };
+  const handlerEdit = async (pedido) => {
+    console.log(pedido);
+    await setEvent(true);
+    onOpen();
   };
   return (
     <div className="flex flex-row flex-wrap ml-10 justify-center items-center">
@@ -163,11 +166,14 @@ function Pedidos() {
                           color="primary"
                           content="Editar"
                         >
-                          <span className="text-lg text-primary cursor-pointer active:opacity-50">
+                          <span
+                            onClick={() => handlerEdit(pedido)}
+                            className="text-lg text-primary cursor-pointer active:opacity-50"
+                          >
                             <FaEdit />
                           </span>
                         </Tooltip>
-                        {(pedido.estatus == 1) ? (
+                        {pedido.estatus == 1 ? (
                           <Tooltip
                             className="text-white"
                             color="danger"
@@ -206,6 +212,7 @@ function Pedidos() {
         onOpenChange={onOpenChange}
         onSubmit={onSubmit}
         register={register}
+        evento={event}
       />
     </div>
   );
