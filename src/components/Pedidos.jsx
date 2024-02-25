@@ -15,6 +15,7 @@ import {
   Tooltip,
   useDisclosure,
   Spinner,
+  Chip,
 } from "@nextui-org/react";
 import ModalClient from "./ModalClient";
 
@@ -25,8 +26,15 @@ function Pedidos() {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const { pedidos, loading, error, postData, refetchPedidos, deletePedidos } =
-    usePedidos();
+  const {
+    pedidos,
+    loading,
+    error,
+    postData,
+    refetchPedidos,
+    deletePedidos,
+    reciclarPedidos,
+  } = usePedidos();
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
   const [page, setPage] = useState(1);
   const [event, setEvent] = useState(false);
@@ -94,9 +102,33 @@ function Pedidos() {
         });
   };
   const handlerEdit = async (pedido) => {
-    console.log(pedido);
     await setEvent(true);
     onOpen();
+  };
+  const handlerReciclar = async (id) => {
+    const result = await reciclarPedidos(id);
+    result
+      ? (refetchPedidos(),
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Pedido Reciclado",
+          showConfirmButton: false,
+          timer: 1500,
+          timerProgressBar: true,
+          toast: true,
+          background: "#ffff",
+        }))
+      : Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: "ha ocurrido un error",
+          showConfirmButton: false,
+          timer: 1500,
+          timerProgressBar: true,
+          toast: true,
+          background: "#ffff",
+        });
   };
   return (
     <div className="flex flex-row flex-wrap ml-10 justify-center items-center">
@@ -111,6 +143,10 @@ function Pedidos() {
         </div>
 
         <Table
+                color={"primary"}
+                selectionMode="multiple" 
+          
+               
           aria-label="Example table with client side pagination"
           bottomContent={
             <div className="flex w-full justify-center">
@@ -149,7 +185,12 @@ function Pedidos() {
                     <TableCell>{pedido.nombre_cliente}</TableCell>
                     <TableCell>{pedido.nombre_usuario}</TableCell>
                     <TableCell>{pedido.nombre_repartidor}</TableCell>
-                    <TableCell>{pedido.estatus_pedido}</TableCell>
+                    <TableCell>
+                      {" "}
+                      <Chip color={pedido.estatus == 0 ? "danger" : "primary"}>
+                        {pedido.estatus_pedido}
+                      </Chip>
+                    </TableCell>
                     <TableCell>
                       <div className="relative flex items-center gap-2">
                         <Tooltip
@@ -180,7 +221,7 @@ function Pedidos() {
                             content="Borrar"
                           >
                             <span
-                              onClick={() => handlerDelete(pedido.pedido_id)}
+                              onClick={() => handlerDelete(pedido)}
                               className="text-lg text-danger cursor-pointer active:opacity-50"
                             >
                               <FaTrash />
@@ -193,7 +234,7 @@ function Pedidos() {
                             content="reciclar"
                           >
                             <span
-                              onClick={() => handlerDelete(pedido.pedido_id)}
+                              onClick={() => handlerReciclar(pedido)}
                               className="text-lg text-primary-400 cursor-pointer active:opacity-50"
                             >
                               <FaRecycle />
