@@ -32,12 +32,8 @@ const usePedidos = () => {
       const response = await axios.post(baseUrl, {
         params: data,
       });
-      console.log(response);
+
       if (response.data.success) {
-        console.log(
-          "Inserción exitosa. ID del nuevo registro:",
-          response.data.insertedId
-        );
         return response.data;
       } else {
         console.error("Error en la inserción:", response.data.message);
@@ -55,11 +51,13 @@ const usePedidos = () => {
   const refetchPedidos = () => {
     fetchPedidos();
   };
-  const deletePedidos = async (id) => {
+  const deletePedidos = async (pedido) => {
+    const id = pedido.pedido_id;
     setLoading(true);
     setError(null);
     try {
       const response = await axios.delete(`${baseUrl}/${id}`);
+
       return response.data;
     } catch (error) {
       setError(error);
@@ -67,7 +65,29 @@ const usePedidos = () => {
       setLoading(false);
     }
   };
-  return { pedidos, loading, error, postData, refetchPedidos, deletePedidos };
+  const reciclarPedidos = async (pedido) => {
+    const id = pedido.pedido_id;
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await axios.patch(`${baseUrl}/${id}`, { data: pedido });
+
+      return response.data;
+    } catch (error) {
+      setError(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+  return {
+    pedidos,
+    loading,
+    error,
+    postData,
+    refetchPedidos,
+    deletePedidos,
+    reciclarPedidos,
+  };
 };
 
 export default usePedidos;
