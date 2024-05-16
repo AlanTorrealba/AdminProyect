@@ -24,9 +24,11 @@ function Login() {
     event.preventDefault();
     try {
       const loginResult = await UseloginValidation({ userName, password });
+     const user_id = loginResult[0].usuario_id
+      console.log(user_id)
       loginResult
         ? (login(),
-          window.localStorage.setItem("user", JSON.stringify("true")),
+          window.localStorage.setItem("user", JSON.stringify(user_id)),
           navigate("/home"),
           Swal.fire({
             position: "top-end",

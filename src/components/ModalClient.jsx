@@ -76,13 +76,15 @@ function ModalClient({
                     ))}
                   </Select>
 
-                  <Input
+                  {/* <Input
                     {...register("usuario")}
-                    label="Usuario"
                     placeholder="Seleccione el usuario"
                     type="text"
                     variant="bordered"
-                  />
+                    value={window.localStorage.getItem("user")}
+                    isDisabled
+                    className="invisible"
+                  /> */}
                 </form>
               </ModalBody>
               <ModalFooter>
