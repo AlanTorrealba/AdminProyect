@@ -27,6 +27,7 @@ const usePedidos = () => {
   }, []);
 
   const postData = async (data) => {
+   data["usuario"] = window.localStorage.getItem("user") 
     setLoading(true);
     try {
       const response = await axios.post(baseUrl, {

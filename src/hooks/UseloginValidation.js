@@ -8,7 +8,7 @@ export async function UseloginValidation({ userName, password }) {
     });
 
     if (response.data.length !== 0) {
-      return true;
+      return response.data;
     }
   } catch (error) {
     console.error(error);

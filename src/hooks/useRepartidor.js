@@ -12,7 +12,6 @@ const useRepartidor = () => {
       setError(null);
       try {
         const response = await axios.get(baseUrl);
-        console.log(response.data.rows)
         setRepartidor(response.data.rows);
         setLoading(false);
       } catch (error) {

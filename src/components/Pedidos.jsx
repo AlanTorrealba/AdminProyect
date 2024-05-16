@@ -17,6 +17,8 @@ import {
   Spinner,
   Chip,
 } from "@nextui-org/react";
+import { Link } from "react-router-dom";
+
 import ModalClient from "./ModalClient";
 
 function Pedidos() {
@@ -135,8 +137,8 @@ function Pedidos() {
       <div className="flex flex-wrap overflow-hidden"></div>
       <div className="m-10 w-full">
         <div className="flex flex-row justify-between">
-          <h2>Listado de Pedidos</h2>
-          <Button onPress={onOpen} color="primary" variant="solid">
+          <h2><b>Listado de Pedidos</b></h2>
+          <Button onPress={onOpen} color="primary" variant="solid" className="mb-1">
             <FaPlus />
             Crear pedido
           </Button>
@@ -144,7 +146,7 @@ function Pedidos() {
 
         <Table
                 color={"primary"}
-                selectionMode="multiple" 
+                // selectionMode="multiple" 
           
                
           aria-label="Example table with client side pagination"
@@ -198,9 +200,12 @@ function Pedidos() {
                           content="Detalles"
                           className="text-white"
                         >
-                          <span className="text-lg text-success cursor-pointer active:opacity-50">
+                              <Link key={pedido.pedido_id} to={`/pedidos/${pedido.pedido_id}`}>
+                          <span
+                           className="text-lg text-success cursor-pointer active:opacity-50">
                             <FaList />
                           </span>
+                             </Link>
                         </Tooltip>
                         <Tooltip
                           className="text-white"

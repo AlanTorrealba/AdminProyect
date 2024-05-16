@@ -25,12 +25,13 @@ function App() {
         )}
         <div id="4" className="flex flex-col flex-1 ">
           {isLogin ? null : (
-            <div className="transition-all h-10 flex justify-between items-center p-5">
-              <input
+            <div className="transition-all h-10 flex justify-end items-center p-5">
+              {/* <input
                 className="w-60 appearance-none bg-transparent border-2 border-sky-500 rounded-r-lg  focus:outline-none"
                 type="input"
                 placeholder="Buscar"
-              />
+                
+              /> */}
               <span>
                 <FaPowerOff
                   className="h-6 w-6 justify-center leading-6  hover:text-red-500 transition transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none"
