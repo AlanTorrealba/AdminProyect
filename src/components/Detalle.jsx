@@ -1,9 +1,10 @@
 import React from "react";
-import { FaTrash, FaEdit, FaList, FaPlus, FaRecycle } from "react-icons/fa";
+import { FaPlus, FaRecycle } from "react-icons/fa";
 import Swal from "sweetalert2";
+import usePedidosdetalles from "../hooks/usePedidosdetalles";
 import { useForm } from "react-hook-form";
 import { useEffect, useState, useMemo } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import {
   Table,
   TableHeader,
@@ -21,6 +22,9 @@ import {
 import Tabla from "./Tabla";
 import ModalDetalle from "./ModalDetalle";
 function Detalle() {
+  const {detalleid} = useParams();
+  console.log(detalleid)
+  const{detalles} = usePedidosdetalles(detalleid)
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
   return (
     <div className="flex flex-row flex-wrap ml-10 justify-center items-center">
