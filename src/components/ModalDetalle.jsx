@@ -17,15 +17,19 @@ function ModalDetalle({
   onOpen,
   onClose,
   onOpenChange,
+  onSubmit,
+  register,
 }) {
-  const {
-    reset,
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
   const { products } = useProducts();
+  const handleSubmit = async (event) => {
+    event.preventDefault();
 
+    try {
+      onSubmit();
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div>
       <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="top-center">
@@ -43,14 +47,23 @@ function ModalDetalle({
                   >
                     {products.map((products) => (
                       <SelectItem
-                        key={products.cliente_id}
-                        value={products.cliente_id}
+                        key={products.producto_id}
+                        value={products.producto_id}
                       >
-                        {products.nombre + ' ' + '--' +' ' + products.precio + '$'} 
+                        {products.nombre +
+                          " " +
+                          "--" +
+                          " " +
+                          products.precio +
+                          "$"}
                       </SelectItem>
                     ))}
                   </Select>
-                  <Input label="Cantidad" variant="bordered" />
+                  <Input
+                    {...register("cantidad")}
+                    label="Cantidad"
+                    variant="bordered"
+                  />
                 </form>
               </ModalBody>
               <ModalFooter>

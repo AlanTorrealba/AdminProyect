@@ -8,15 +8,12 @@ const usePedidosdetalles = (id) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const detalleId = id;
-    
+
   const fetchDetalles = async (detalleId) => {
-    console.log(detalleId);
     setLoading(true);
     setError(null);
-
     try {
       const response = await axios.get(`${baseUrl}/${detalleId}`);
-     
       setDetalles(response.data);
     } catch (error) {
       setError(error);
@@ -29,8 +26,8 @@ const usePedidosdetalles = (id) => {
     fetchDetalles(detalleId);
   }, []);
 
-  const refetchDetalles = () => {
-    fetchDetalles();
+  const refetchDetalles = (id) => {
+    fetchDetalles(id);
   };
   //   const deletePedidos = async (pedido) => {
   //     const id = pedido.pedido_id;
@@ -60,9 +57,32 @@ const usePedidosdetalles = (id) => {
   //       setLoading(false);
   //     }
   //   };
+
+  const postData = async (data) => {
+    setLoading(true);
+    try {
+      const response = await axios.post(baseUrl, {
+        params: data,
+      });
+      if (response.data.success) {
+        return response.data;
+      } else {
+        console.error("Error en la inserción:", response.data.message);
+        return response.data;
+      }
+    } catch (error) {
+      setError(error);
+      console.error("Error en la solicitud:", error);
+      return error;
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return {
     detalles,
     refetchDetalles,
+    postData,
     loading,
     error,
   };
