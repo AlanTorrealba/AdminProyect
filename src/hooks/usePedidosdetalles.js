@@ -29,34 +29,34 @@ const usePedidosdetalles = (id) => {
   const refetchDetalles = (id) => {
     fetchDetalles(id);
   };
-  //   const deletePedidos = async (pedido) => {
-  //     const id = pedido.pedido_id;
-  //     setLoading(true);
-  //     setError(null);
-  //     try {
-  //       const response = await axios.delete(`${baseUrl}/${id}`);
+    const deleteDetalles = async (id) => {
+      const detalleId = id;
+      setLoading(true);
+      setError(null);
+      try {
+        const response = await axios.delete(`${baseUrl}/${detalleId}`);
 
-  //       return response.data;
-  //     } catch (error) {
-  //       setError(error);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-  //   const reciclarPedidos = async (pedido) => {
-  //     const id = pedido.pedido_id;
-  //     setLoading(true);
-  //     setError(null);
-  //     try {
-  //       const response = await axios.patch(`${baseUrl}/${id}`, { data: pedido });
+        return response.data;
+      } catch (error) {
+        setError(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    const reciclarDetalles = async (id) => {
+      const detalleId = id
+      setLoading(true);
+      setError(null);
+      try {
+        const response = await axios.patch(`${baseUrl}/${detalleId}`, { data: id });
 
-  //       return response.data;
-  //     } catch (error) {
-  //       setError(error);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
+        return response.data;
+      } catch (error) {
+        setError(error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
   const postData = async (data) => {
     setLoading(true);
@@ -83,6 +83,8 @@ const usePedidosdetalles = (id) => {
     detalles,
     refetchDetalles,
     postData,
+    deleteDetalles,
+    reciclarDetalles,
     loading,
     error,
   };

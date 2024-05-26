@@ -132,6 +132,11 @@ function Pedidos() {
           background: "#ffff",
         });
   };
+
+  const handleOpen = async()=>{
+     setEvent(false)
+     onOpen()
+  }
   return (
     <div className="flex flex-row flex-wrap ml-10 justify-center items-center">
       <div className="flex flex-wrap overflow-hidden"></div>
@@ -141,7 +146,7 @@ function Pedidos() {
             <b>Listado de Pedidos</b>
           </h2>
           <Button
-            onPress={onOpen}
+            onPress={handleOpen}
             color="primary"
             variant="solid"
             className="mb-1"

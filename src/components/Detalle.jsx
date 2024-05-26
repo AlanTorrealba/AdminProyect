@@ -1,9 +1,9 @@
 import React from "react";
-import { FaPlus, FaRecycle, FaList, FaEdit, FaTrash } from "react-icons/fa";
+import { FaPlus, FaRecycle, FaEdit, FaTrash } from "react-icons/fa";
 import Swal from "sweetalert2";
 import usePedidosdetalles from "../hooks/usePedidosdetalles";
 import { useForm } from "react-hook-form";
-import { useEffect, useState, useMemo } from "react";
+import {  useState, useMemo } from "react";
 import { Link, useParams } from "react-router-dom";
 import {
   Table,
@@ -29,7 +29,7 @@ function Detalle() {
   } = useForm();
 
   const { detalleid } = useParams();
-  const { detalles, loading, postData, refetchDetalles } = usePedidosdetalles(detalleid);
+  const { detalles, loading, postData, refetchDetalles, deleteDetalles, reciclarDetalles} = usePedidosdetalles(detalleid);
   const [page, setPage] = useState(1);
   const [event, setEvent] = useState(false);
   const rowsPerPage = 10;
@@ -47,7 +47,7 @@ function Detalle() {
     detallesResult.success
       ? (reset(),
         onClose(),
-        refetchDetalles(detalleid),
+        await refetchDetalles(detalleid),
         Swal.fire({
           position: "top-end",
           icon: "success",
@@ -59,7 +59,7 @@ function Detalle() {
           background: "#ffff",
         }))
       : (
-        refetchDetalles(detalleid),
+        await refetchDetalles(detalleid),
         Swal.fire({
           position: "top-end",
           icon: "error",
@@ -71,8 +71,69 @@ function Detalle() {
           background: "#ffff",
         }));
   });
+  const handlerDelete = async (id) => {
+    try {
+      const result = await deleteDetalles(id);
+      if (result) {
+        await refetchDetalles(detalleid);
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Detalle Eliminado",
+          showConfirmButton: false,
+          timer: 1500,
+          timerProgressBar: true,
+          toast: true,
+          background: "#ffff",
+        });
+      } else {
+        throw new Error("Ha ocurrido un error");
+      }
+    } catch (error) {
+      Swal.fire({
+        position: "top-end",
+        icon: "error",
+        title: error.message || "Ha ocurrido un error",
+        showConfirmButton: false,
+        timer: 1500,
+        timerProgressBar: true,
+        toast: true,
+        background: "#ffff",
+      });
+    }
+  };
 
-
+  const handlerReciclar = async (id) => {
+    try {
+      const result = await reciclarDetalles(id);
+      if (result) {
+        await refetchDetalles(detalleid);
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Detalle Reciclado",
+          showConfirmButton: false,
+          timer: 1500,
+          timerProgressBar: true,
+          toast: true,
+          background: "#ffff",
+        });
+      } else {
+        throw new Error("Ha ocurrido un error");
+      }
+    } catch (error) {
+      Swal.fire({
+        position: "top-end",
+        icon: "error",
+        title: error.message || "Ha ocurrido un error",
+        showConfirmButton: false,
+        timer: 1500,
+        timerProgressBar: true,
+        toast: true,
+        background: "#ffff",
+      });
+    }
+  };
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
   return (
     <div className="flex flex-row flex-wrap ml-10 justify-center items-center">
@@ -177,7 +238,7 @@ function Detalle() {
                           content="Editar"
                         >
                           <span
-                            onClick={() => handlerEdit(detalles.id)}
+                            onClick={() => handlerEdit(detalles.detalle_id)}
                             className="text-lg text-primary cursor-pointer active:opacity-50"
                           >
                             <FaEdit />
@@ -190,7 +251,7 @@ function Detalle() {
                             content="Borrar"
                           >
                             <span
-                              onClick={() => handlerDelete(detalles.id)}
+                              onClick={() => handlerDelete(detalles.detalle_id)}
                               className="text-lg text-danger cursor-pointer active:opacity-50"
                             >
                               <FaTrash />
@@ -203,7 +264,7 @@ function Detalle() {
                             content="reciclar"
                           >
                             <span
-                              onClick={() => handlerReciclar(detalles.id)}
+                              onClick={() => handlerReciclar(detalles.detalle_id)}
                               className="text-lg text-primary-400 cursor-pointer active:opacity-50"
                             >
                               <FaRecycle />
