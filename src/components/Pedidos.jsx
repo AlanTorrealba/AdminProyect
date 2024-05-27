@@ -132,23 +132,34 @@ function Pedidos() {
           background: "#ffff",
         });
   };
+
+  const handleOpen = async()=>{
+     setEvent(false)
+     onOpen()
+  }
   return (
     <div className="flex flex-row flex-wrap ml-10 justify-center items-center">
       <div className="flex flex-wrap overflow-hidden"></div>
       <div className="m-10 w-full">
         <div className="flex flex-row justify-between">
-          <h2><b>Listado de Pedidos</b></h2>
-          <Button onPress={onOpen} color="primary" variant="solid" className="mb-1">
+          <h2>
+            <b>Listado de Pedidos</b>
+          </h2>
+          <Button
+            onPress={handleOpen}
+            color="primary"
+            variant="solid"
+            className="mb-1"
+          >
             <FaPlus />
             Crear pedido
           </Button>
         </div>
 
         <Table
-                color={"primary"}
-                // selectionMode="multiple" 
-          
-               
+          color={"primary"}
+          // selectionMode="multiple"
+
           aria-label="Example table with client side pagination"
           bottomContent={
             <div className="flex w-full justify-center">
@@ -200,12 +211,14 @@ function Pedidos() {
                           content="Detalles"
                           className="text-white"
                         >
-                              <Link key={pedido.pedido_id} to={`/pedidos/${pedido.pedido_id}`}>
-                          <span
-                           className="text-lg text-success cursor-pointer active:opacity-50">
-                            <FaList />
-                          </span>
-                             </Link>
+                          <Link
+                            key={pedido.pedido_id}
+                            to={`/pedidos/${pedido.pedido_id}`}
+                          >
+                            <span className="text-lg text-success cursor-pointer active:opacity-50">
+                              <FaList />
+                            </span>
+                          </Link>
                         </Tooltip>
                         <Tooltip
                           className="text-white"
