@@ -29,6 +29,7 @@ const usePedidos = () => {
   const postData = async (data) => {
    data["usuario"] = window.localStorage.getItem("user") 
     setLoading(true);
+    console.log("data", data);
     try {
       const response = await axios.post(baseUrl, {
         params: data,
@@ -58,7 +59,6 @@ const usePedidos = () => {
     setError(null);
     try {
       const response = await axios.delete(`${baseUrl}/${id}`);
-
       return response.data;
     } catch (error) {
       setError(error);
@@ -88,6 +88,7 @@ const usePedidos = () => {
     refetchPedidos,
     deletePedidos,
     reciclarPedidos,
+    setPedidos,
   };
 };
 

@@ -6,9 +6,10 @@ export async function UseloginValidation({ userName, password }) {
     const response = await axios.get(baseUrl, {
       params: { username: userName, password: password },
     });
-
     if (response.data.length !== 0) {
       return response.data;
+    }else{
+      return 400;
     }
   } catch (error) {
     console.error(error);
