@@ -2,7 +2,7 @@ import { useState } from "react";
 import { UseloginValidation } from "../hooks/UseloginValidation";
 import { useNavigate } from "react-router-dom";
 import useAuthStore from "../context/authStore";
-import {Button} from "@nextui-org/react";
+import { Button } from "@nextui-org/react";
 import Swal from "sweetalert2";
 
 function Login() {
@@ -22,40 +22,65 @@ function Login() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    if (!userName || !password) {
+      Swal.fire({
+        position: "top-end",
+        icon: "error",
+        title: "Por favor ingrese los datos",
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true,
+        toast: true,
+        background: "#ffff",
+      });
+      return;
+    }
     try {
       const loginResult = await UseloginValidation({ userName, password });
-     const user_id = loginResult[0].usuario_id
-      console.log(user_id)
-      loginResult
-        ? (login(),
-          window.localStorage.setItem("user", JSON.stringify(user_id)),
-          navigate("/home"),
-          Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: "exito",
-            showConfirmButton: false,
-            timer: 1500,
-            timerProgressBar: true,
-            toast: true,
-            background: "#ffff",
-          }))
-        : Swal.fire({
-            position: "top-end",
-            icon: "error",
-            title: "Los datos son incorrectos",
-            showConfirmButton: false,
-            timer: 2000,
-            timerProgressBar: true,
-            toast: true,
-            background: "#ffff",
-          });
+      if (!loginResult || loginResult.length === 0) {
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: "Los datos son incorrectos",
+          showConfirmButton: false,
+          timer: 2000,
+          timerProgressBar: true,
+          toast: true,
+          background: "#ffff",
+        });
+        return;
+      }
+      const user_id = loginResult[0].usuario_id;
+      loginResult;
+      login();
+      window.localStorage.setItem("user", JSON.stringify(user_id));
+      navigate("/home");
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "exito",
+        showConfirmButton: false,
+        timer: 1500,
+        timerProgressBar: true,
+        toast: true,
+        background: "#ffff",
+      });
     } catch (error) {
-      console.log(error);
+      Swal.fire({
+        position: "top-end",
+        icon: "error",
+        title: "Los datos son incorrectos",
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true,
+        toast: true,
+        background: "#ffff",
+      });
     }
   };
 
   return (
+    <div className="overflow-hidden min-h-screen">
     <div className="flex items-center justify-center min-h-screen backdrop-blur-sm  ">
       <div className="flex min-h-lg w-96  flex-col justify-center px-6 py-12 lg:px-8 rounded-lg shadow-[0_35px_60px_-15px_rgba(0,0,0,0.8)] bg-gradient-to-r from-cyan-500 to-blue-500 ">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
@@ -83,15 +108,19 @@ function Login() {
                 onChange={handleChangePassword}
               />
             </div>
-           
+
             <div className="">
-              <Button type="submit" className="flex w-full justify-center bg-white px-3 py-1.5 text-sm font-bold leading-6 text-white overflow-visible rounded-full hover:-translate-y-1  shadow-xl bg-background/30 after:content-[''] after:absolute after:rounded-full after:inset-0 after:bg-background/40 after:z-[-1] after:transition after:!duration-500 hover:after:scale-150 hover:after:opacity-0">
+              <Button
+                type="submit"
+                className="flex w-full justify-center bg-white px-3 py-1.5 text-sm font-bold leading-6 text-white overflow-visible rounded-full hover:-translate-y-1  shadow-xl bg-background/30 after:content-[''] after:absolute after:rounded-full after:inset-0 after:bg-background/40 after:z-[-1] after:transition after:!duration-500 hover:after:scale-150 hover:after:opacity-0"
+              >
                 Iniciar
               </Button>
             </div>
           </form>
         </div>
       </div>
+    </div>
     </div>
   );
 }

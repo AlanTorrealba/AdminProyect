@@ -21,9 +21,12 @@ function ModalClient({
   register,
   onSubmit,
   evento,
+  pedido,
 }) {
   const { cliente } = useClients();
   const { repartidor } = useRepartidor();
+  console.log("pedido", pedido);
+  console.log("evento", evento);
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -41,7 +44,7 @@ function ModalClient({
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1">
-                {evento ? "Editar" : "Crear"} pedido
+                {evento ? "Editar"  : "Crear"} pedido { evento ? "- N° " + pedido.pedido_id : ""}
               </ModalHeader>
               <ModalBody>
                 <form onSubmit={handleSubmit}>
@@ -50,6 +53,7 @@ function ModalClient({
                     label="Cliente"
                     placeholder="Seleccione un cliente"
                     variant="bordered"
+                     defaultSelectedKeys= {evento ? (pedido?.cliente_id) : ""}
                   >
                     {cliente.map((cliente) => (
                       <SelectItem
