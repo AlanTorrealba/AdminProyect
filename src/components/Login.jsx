@@ -42,7 +42,7 @@ function Login() {
         Swal.fire({
           position: "top-end",
           icon: "error",
-          title: "Los datos son incorrectos",
+          title: "Los datos son incorrectos.",
           showConfirmButton: false,
           timer: 2000,
           timerProgressBar: true,

@@ -1,4 +1,4 @@
-import  Grafics  from "./Grafics";
+import Grafics from "./Grafics";
 
 function Graficas() {
   return (
