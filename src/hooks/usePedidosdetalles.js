@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 
-const baseUrl = "http://localhost:3000/api/detalles";
+const baseUrl = "http://localhost:3000/citas";
 
 const usePedidosdetalles = (id) => {
   const [detalles, setDetalles] = useState([]);
@@ -13,12 +13,16 @@ const usePedidosdetalles = (id) => {
     setLoading(true);
     setError(null);
     try {
-      const response = await axios.get(`${baseUrl}/${detalleId}`);
-      setDetalles(response.data);
-    } catch (error) {
-      setError(error);
-    } finally {
-      setLoading(false);
+      const response = await axios.get(`${baseUrl}/${detalleId}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+        setDetalles(response.data.data);
+      } catch (error) {
+        setError(error);
+      } finally {
+        setLoading(false);
     }
   };
 

@@ -3,6 +3,7 @@ import { UseloginValidation } from "../hooks/UseloginValidation";
 import { useNavigate } from "react-router-dom";
 import useAuthStore from "../context/authStore";
 import { Button } from "@nextui-org/react";
+import Toast from "../utils/Toast";
 import Swal from "sweetalert2";
 
 function Login() {
@@ -23,14 +24,9 @@ function Login() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (!userName || !password) {
-      Swal.fire({
-        position: "top-end",
+      Toast.fire({
         icon: "error",
         title: "Por favor ingrese los datos",
-        showConfirmButton: false,
-        timer: 2000,
-        timerProgressBar: true,
-        toast: true,
         background: "#ffff",
       });
       return;
@@ -39,39 +35,24 @@ function Login() {
       const loginResult = await UseloginValidation({ userName, password });
       console.log("desde login : ", loginResult);
       if (!loginResult || !loginResult.data.access_token) {
-        Swal.fire({
-          position: "top-end",
+        toast.fire({
           icon: "error",
-          title: "Los datos son incorrectos.",
-          showConfirmButton: false,
-          timer: 2000,
-          timerProgressBar: true,
-          toast: true,
+          title: "Los datos son incorrectos",
           background: "#ffff",
         });
         return;
       }
       login();
       navigate("/home");
-      Swal.fire({
-        position: "top-end",
+      Toast.fire({
         icon: "success",
-        title: "exito",
-        showConfirmButton: false,
-        timer: 1500,
-        timerProgressBar: true,
-        toast: true,
+        title: "Bienvenido",
         background: "#ffff",
       });
     } catch (error) {
-      Swal.fire({
-        position: "top-end",
+      Toast.fire({
         icon: "error",
-        title: "Los datos son incorrectos",
-        showConfirmButton: false,
-        timer: 2000,
-        timerProgressBar: true,
-        toast: true,
+        title: "Error en la solicitud",
         background: "#ffff",
       });
     }
@@ -79,46 +60,46 @@ function Login() {
 
   return (
     <div className="overflow-hidden min-h-screen">
-    <div className="flex items-center justify-center min-h-screen backdrop-blur-sm  ">
-      <div className="flex min-h-lg w-96  flex-col justify-center px-6 py-12 lg:px-8 rounded-lg shadow-[0_35px_60px_-15px_rgba(0,0,0,0.8)] bg-gradient-to-r from-cyan-500 to-blue-500 ">
-        <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <h1 className="mt-10 text-center text-4xl font-bold leading-9 tracking-tight text-white">
-            CarWash
-          </h1>
-        </div>
+      <div className="flex items-center justify-center min-h-screen backdrop-blur-sm  ">
+        <div className="flex min-h-lg w-96  flex-col justify-center px-6 py-12 lg:px-8 rounded-lg shadow-[0_35px_60px_-15px_rgba(0,0,0,0.8)] bg-gradient-to-r from-cyan-500 to-blue-500 ">
+          <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+            <h1 className="mt-10 text-center text-4xl font-bold leading-9 tracking-tight text-white">
+              CarWash
+            </h1>
+          </div>
 
-        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form action="" className="space-y-6" onSubmit={handleSubmit}>
-            <div className="mt-2">
-              <input
-                className="appearance-none bg-transparent border-b-2 w-full text-white mr-3 placeholder:text-white py-1 px-2 leading-tight focus:outline-none"
-                type="text"
-                placeholder="Usuario"
-                onChange={handleChangeUser}
-              />
-            </div>
+          <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+            <form action="" className="space-y-6" onSubmit={handleSubmit}>
+              <div className="mt-2">
+                <input
+                  className="appearance-none bg-transparent border-b-2 w-full text-white mr-3 placeholder:text-white py-1 px-2 leading-tight focus:outline-none"
+                  type="text"
+                  placeholder="Usuario"
+                  onChange={handleChangeUser}
+                />
+              </div>
 
-            <div className="mt-2">
-              <input
-                className="appearance-none bg-transparent border-b-2 w-full text-white mr-3 placeholder:text-white py-1 px-2 leading-tight focus:outline-none "
-                type="password"
-                placeholder="Contraseña"
-                onChange={handleChangePassword}
-              />
-            </div>
+              <div className="mt-2">
+                <input
+                  className="appearance-none bg-transparent border-b-2 w-full text-white mr-3 placeholder:text-white py-1 px-2 leading-tight focus:outline-none "
+                  type="password"
+                  placeholder="Contraseña"
+                  onChange={handleChangePassword}
+                />
+              </div>
 
-            <div className="">
-              <Button
-                type="submit"
-                className="flex w-full justify-center bg-white px-3 py-1.5 text-sm font-bold leading-6 text-white overflow-visible rounded-full hover:-translate-y-1  shadow-xl bg-background/30 after:content-[''] after:absolute after:rounded-full after:inset-0 after:bg-background/40 after:z-[-1] after:transition after:!duration-500 hover:after:scale-150 hover:after:opacity-0"
-              >
-                Iniciar
-              </Button>
-            </div>
-          </form>
+              <div className="">
+                <Button
+                  type="submit"
+                  className="flex w-full justify-center bg-white px-3 py-1.5 text-sm font-bold leading-6 text-white overflow-visible rounded-full hover:-translate-y-1  shadow-xl bg-background/30 after:content-[''] after:absolute after:rounded-full after:inset-0 after:bg-background/40 after:z-[-1] after:transition after:!duration-500 hover:after:scale-150 hover:after:opacity-0"
+                >
+                  Iniciar
+                </Button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
     </div>
   );
 }

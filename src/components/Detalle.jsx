@@ -202,56 +202,39 @@ function Detalle() {
           >
             {loading
               ? ""
-              : items.map((detalles) => (
-                  <TableRow key={detalles.detalle_id}>
-                    <TableCell>{detalles.detalle_id}</TableCell>
-                    <TableCell>{detalles.nombre}</TableCell>
-                    <TableCell>{detalles.cantidad}</TableCell>
-                    <TableCell>{detalles.precio_unitario}</TableCell>
+              : (detalles?.citaServicios || []).map((servicio) => (
+                  <TableRow key={servicio.id}>
+                    <TableCell>{servicio.id}</TableCell>
+                    <TableCell>{servicio.servicio?.nombre}</TableCell>
+                    <TableCell>{servicio.cantidad}</TableCell>
+                    <TableCell>{servicio.precio}</TableCell>
                     <TableCell>
-                      {" "}
-                      <Chip
-                        color={detalles.estatus == 0 ? "danger" : "primary"}
-                      >
-                        {detalles.estatus == 0 ? "Eliminado" : "Activo"}
+                      <Chip color={servicio.estatus === 0 ? "danger" : "primary"}>
+                        {servicio.estatus === 0 ? "Eliminado" : "Activo"}
                       </Chip>
                     </TableCell>
                     <TableCell>
                       <div className="relative flex items-center gap-2">
-                        {/* <Tooltip
-                          color="success"
-                          content="Detalles"
-                          className="text-white"
-                        >
-                          <Link
-                            key={detalles.id}
-                            to={`/pedidos/${detalles.id}`}
-                          >
-                            <span className="text-lg text-success cursor-pointer active:opacity-50">
-                              <FaList />
-                            </span>
-                          </Link>
-                        </Tooltip> */}
                         <Tooltip
                           className="text-white"
                           color="primary"
                           content="Editar"
                         >
                           <span
-                            onClick={() => handlerEdit(detalles.detalle_id)}
+                            onClick={() => handlerEdit(servicio.id)}
                             className="text-lg text-primary cursor-pointer active:opacity-50"
                           >
                             <FaEdit />
                           </span>
                         </Tooltip>
-                        {detalles.estatus == 1 ? (
+                        {servicio.estatus === 1 ? (
                           <Tooltip
                             className="text-white"
                             color="danger"
                             content="Borrar"
                           >
                             <span
-                              onClick={() => handlerDelete(detalles.detalle_id)}
+                              onClick={() => handlerDelete(servicio.id)}
                               className="text-lg text-danger cursor-pointer active:opacity-50"
                             >
                               <FaTrash />
@@ -261,10 +244,10 @@ function Detalle() {
                           <Tooltip
                             className="text-white"
                             color="primary"
-                            content="reciclar"
+                            content="Reciclar"
                           >
                             <span
-                              onClick={() => handlerReciclar(detalles.detalle_id)}
+                              onClick={() => handlerReciclar(servicio.id)}
                               className="text-lg text-primary-400 cursor-pointer active:opacity-50"
                             >
                               <FaRecycle />

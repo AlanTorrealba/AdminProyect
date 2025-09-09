@@ -1,8 +1,8 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 
-const baseUrl = "http://localhost:3000/api/pedidos";
-
+const baseUrl = "http://localhost:3000/citas";
+const token = localStorage.getItem("token");
 const usePedidos = () => {
   const [pedidos, setPedidos] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -11,10 +11,14 @@ const usePedidos = () => {
   const fetchPedidos = async () => {
     setLoading(true);
     setError(null);
-
     try {
-      const response = await axios.get(baseUrl);
-      setPedidos(response.data);
+      const response = await axios.get(baseUrl, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log("response", response.data.data);
+      setPedidos(response.data.data);
     } catch (error) {
       setError(error);
     } finally {
@@ -29,7 +33,6 @@ const usePedidos = () => {
   const postData = async (data) => {
    data["usuario"] = window.localStorage.getItem("user") 
     setLoading(true);
-    console.log("data", data);
     try {
       const response = await axios.post(baseUrl, {
         params: data,

@@ -14,7 +14,7 @@ function Home() {
       {/* <div className="m-10 w-full">
         <Tabla  />
       </div> */}
-      <DashboardTanques/>
+      {/* <DashboardTanques/> */}
       <Dashboard />
     </div>
   );

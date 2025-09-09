@@ -135,7 +135,7 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="min-h-screen min-w-full pr-6">
+    <div className="min-h-screen mb-5 min-w-full pr-6">
       {/* Header */}
       <div className="mb-2">
         {/* <h1 className="text-4xl font-bold text-foreground mb-2">Dashboard Autolavado</h1> */}
