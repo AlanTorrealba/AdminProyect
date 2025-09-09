@@ -1,7 +1,7 @@
   import { useEffect, useState, useMemo } from "react";
   import { FaTrash, FaEdit, FaList, FaPlus, FaRecycle } from "react-icons/fa";
   import usePedidos from "../hooks/usePedidos";
-  import Swal from "sweetalert2";
+  import Toast from "../utils/Toast";
   import { useForm } from "react-hook-form";
   import {
     Table,
@@ -61,25 +61,15 @@
           onClose(),
           // setPedido((prevPedidos) => [...prevPedidos, pedidosResult.newPedido]),
           refetchPedidos(),
-          Swal.fire({
-            position: "top-end",
+         Toast.fire({
             icon: "success",
-            title: "exito al crear pedido",
-            showConfirmButton: false,
-            timer: 1500,
-            timerProgressBar: true,
-            toast: true,
+            title: "Cita creada",
             background: "#ffff",
           }))
         : (refetchPedidos(),
-          Swal.fire({
-            position: "top-end",
+          Toast.fire({
             icon: "error",
-            title: "error al crear pedido",
-            showConfirmButton: false,
-            timer: 1500,
-            timerProgressBar: true,
-            toast: true,
+            title: "ha ocurrido un error",
             background: "#ffff",
           }));
     });
@@ -87,24 +77,14 @@
       const result = await deletePedidos(id);
       result
         ? (refetchPedidos(),
-          Swal.fire({
-            position: "top-end",
+          Toast.fire({
             icon: "success",
-            title: "Pedido Eliminado",
-            showConfirmButton: false,
-            timer: 1500,
-            timerProgressBar: true,
-            toast: true,
+            title: "Cita eliminada",
             background: "#ffff",
           }))
-        : Swal.fire({
-            position: "top-end",
+        : Toast.fire({
             icon: "error",
             title: "ha ocurrido un error",
-            showConfirmButton: false,
-            timer: 1500,
-            timerProgressBar: true,
-            toast: true,
             background: "#ffff",
           });
     };
@@ -117,24 +97,14 @@
       const result = await reciclarPedidos(id);
       result
         ? (refetchPedidos(),
-          Swal.fire({
-            position: "top-end",
+          Toast.fire({
             icon: "success",
-            title: "Pedido Reciclado",
-            showConfirmButton: false,
-            timer: 1500,
-            timerProgressBar: true,
-            toast: true,
+            title: "Cita reciclada",
             background: "#ffff",
           }))
-        : Swal.fire({
-            position: "top-end",
+        : Toast.fire({
             icon: "error",
             title: "ha ocurrido un error",
-            showConfirmButton: false,
-            timer: 1500,
-            timerProgressBar: true,
-            toast: true,
             background: "#ffff",
           });
     };
@@ -188,7 +158,7 @@
               <TableColumn key="pedido_id">ID</TableColumn>
               <TableColumn key="nombre_cliente">Cliente</TableColumn>
               <TableColumn key="nombre_usuario">Usuario</TableColumn>
-              <TableColumn key="nombre_repartidor">Repartidor</TableColumn>
+              <TableColumn key="nombre_repartidor">Total $</TableColumn>
               <TableColumn key="estatus_pedido">Estatus</TableColumn>
               <TableColumn key="accion">Acción</TableColumn>
             </TableHeader>
@@ -199,15 +169,15 @@
               {loading
                 ? ""
                 : items.map((pedido) => (
-                    <TableRow key={pedido.pedido_id}>
-                      <TableCell>{pedido.pedido_id}</TableCell>
-                      <TableCell>{pedido.nombre_cliente}</TableCell>
+                    <TableRow key={pedido.id}>
+                      <TableCell>{pedido.id}</TableCell>
+                      <TableCell>{pedido.cliente.nombre}</TableCell>
                       <TableCell>{pedido.nombre_usuario}</TableCell>
-                      <TableCell>{pedido.nombre_repartidor}</TableCell>
+                      <TableCell>{pedido.total}</TableCell>
                       <TableCell>
                         {" "}
-                        <Chip color={pedido.estatus == 0 ? "danger" : "primary"}>
-                          {pedido.estatus_pedido}
+                        <Chip color={pedido.isActive ? "primary" : "danger" }>
+                          {pedido.isActive ? "Activo" : "Inactivo"}
                         </Chip>
                       </TableCell>
                       <TableCell>
@@ -218,8 +188,8 @@
                             className="text-white"
                           >
                             <Link
-                              key={pedido.pedido_id}
-                              to={`/pedidos/${pedido.pedido_id}`}
+                              key={pedido.id}
+                              to={`/pedidos/${pedido.id}`}
                             >
                               <span className="text-lg text-success cursor-pointer active:opacity-50">
                                 <FaList />
@@ -243,7 +213,7 @@
                         
                             </Tooltip>
                           ) }
-                          {pedido.estatus == 1 ? (
+                          {pedido.isActive ? (
                             <Tooltip
                               className="text-white"
                               color="danger"
