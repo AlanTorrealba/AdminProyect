@@ -5,6 +5,7 @@ import usePedidosdetalles from "../hooks/usePedidosdetalles";
 import { useForm } from "react-hook-form";
 import {  useState, useMemo } from "react";
 import { Link, useParams } from "react-router-dom";
+import Toast from "../utils/Toast";
 import {
   Table,
   TableHeader,
@@ -36,9 +37,10 @@ function Detalle() {
   const pages = Math.ceil(detalles.length / rowsPerPage);
 
   const items = useMemo(() => {
+    const servicios = detalles?.citaServicios || [];
     const start = (page - 1) * rowsPerPage;
     const end = start + rowsPerPage;
-    return detalles.slice(start, end);
+    return servicios.slice(start, end);
   }, [page, detalles]);
 
   const onSubmit = handleSubmit(async (data) => {
@@ -48,26 +50,16 @@ function Detalle() {
       ? (reset(),
         onClose(),
         await refetchDetalles(detalleid),
-        Swal.fire({
-          position: "top-end",
+        Toast.fire({
           icon: "success",
           title: "exito al crear pedido",
-          showConfirmButton: false,
-          timer: 1500,
-          timerProgressBar: true,
-          toast: true,
           background: "#ffff",
         }))
       : (
         await refetchDetalles(detalleid),
-        Swal.fire({
-          position: "top-end",
+        Toast.fire({
           icon: "error",
           title: "error al crear pedido",
-          showConfirmButton: false,
-          timer: 1500,
-          timerProgressBar: true,
-          toast: true,
           background: "#ffff",
         }));
   });
@@ -76,28 +68,18 @@ function Detalle() {
       const result = await deleteDetalles(id);
       if (result) {
         await refetchDetalles(detalleid);
-        Swal.fire({
-          position: "top-end",
+        Toast.fire({
           icon: "success",
           title: "Detalle Eliminado",
-          showConfirmButton: false,
-          timer: 1500,
-          timerProgressBar: true,
-          toast: true,
           background: "#ffff",
         });
       } else {
         throw new Error("Ha ocurrido un error");
       }
     } catch (error) {
-      Swal.fire({
-        position: "top-end",
+      Toast.fire({
         icon: "error",
         title: error.message || "Ha ocurrido un error",
-        showConfirmButton: false,
-        timer: 1500,
-        timerProgressBar: true,
-        toast: true,
         background: "#ffff",
       });
     }
@@ -108,35 +90,25 @@ function Detalle() {
       const result = await reciclarDetalles(id);
       if (result) {
         await refetchDetalles(detalleid);
-        Swal.fire({
-          position: "top-end",
+        Toast.fire({
           icon: "success",
           title: "Detalle Reciclado",
-          showConfirmButton: false,
-          timer: 1500,
-          timerProgressBar: true,
-          toast: true,
           background: "#ffff",
         });
       } else {
         throw new Error("Ha ocurrido un error");
       }
     } catch (error) {
-      Swal.fire({
-        position: "top-end",
-        icon: "error",
+      Toast.fire({
+       icon: "error",
         title: error.message || "Ha ocurrido un error",
-        showConfirmButton: false,
-        timer: 1500,
-        timerProgressBar: true,
-        toast: true,
         background: "#ffff",
       });
     }
   };
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
   return (
-    <div className="flex flex-row flex-wrap ml-10 justify-center items-center">
+    <div className="flex flex-row flex-wrap ml-4 justify-center items-center">
       <div className="flex flex-wrap overflow-hidden"></div>
       <div className="m-10 w-full">
         <div className="flex flex-row justify-between">
@@ -192,7 +164,7 @@ function Detalle() {
             <TableColumn key="detalle_">ID</TableColumn>
             <TableColumn key="detalle_producto">Producto</TableColumn>
             <TableColumn key="detalle_cantidad">Cantidad</TableColumn>
-            <TableColumn key="detalle_precio">Precio</TableColumn>
+            <TableColumn key="detalle_precio">Precio ( $ )</TableColumn>
             <TableColumn key="datalle_status">Estatus</TableColumn>
             <TableColumn key="accion">Acción</TableColumn>
           </TableHeader>
@@ -209,8 +181,8 @@ function Detalle() {
                     <TableCell>{servicio.cantidad}</TableCell>
                     <TableCell>{servicio.precio}</TableCell>
                     <TableCell>
-                      <Chip color={servicio.estatus === 0 ? "danger" : "primary"}>
-                        {servicio.estatus === 0 ? "Eliminado" : "Activo"}
+                      <Chip color={servicio.isActive ? "primary" : "danger"}>
+                        {servicio.isActive ? "Activo" : "Eliminado"}
                       </Chip>
                     </TableCell>
                     <TableCell>
@@ -227,7 +199,7 @@ function Detalle() {
                             <FaEdit />
                           </span>
                         </Tooltip>
-                        {servicio.estatus === 1 ? (
+                        {servicio.isActive ? (
                           <Tooltip
                             className="text-white"
                             color="danger"

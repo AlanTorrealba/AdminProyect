@@ -18,6 +18,7 @@ const usePedidosdetalles = (id) => {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
+      console.log(response.data.data);
         setDetalles(response.data.data);
       } catch (error) {
         setError(error);

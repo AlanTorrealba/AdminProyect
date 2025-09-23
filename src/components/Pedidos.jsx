@@ -53,9 +53,7 @@
 
     // ...
     const onSubmit = handleSubmit(async (data) => {
-      const pedidosResult = await postData(data);
-      console.log("pedidosResult", pedidosResult);
-      
+      const pedidosResult = await postData(data);      
       pedidosResult.success
         ? (reset(),
           onClose(),
@@ -182,11 +180,12 @@
                       </TableCell>
                       <TableCell>
                         <div className="relative flex items-center gap-2">
-                          <Tooltip
-                            color="success"
-                            content="Detalles"
-                            className="text-white"
-                          >
+                          {pedido.isActive ? (
+                            <Tooltip
+                              color="success"
+                              content="Detalles"
+                              className="text-white"
+                            > 
                             <Link
                               key={pedido.id}
                               to={`/pedidos/${pedido.id}`}
@@ -195,8 +194,8 @@
                                 <FaList />
                               </span>
                             </Link>
-                          </Tooltip>
-                          {pedido.estatus == 1 ? (
+                          </Tooltip>) : (<Tooltip></Tooltip>) }
+                          {pedido.isActive ? (
                           <Tooltip
                             className="text-white"
                             color="primary"

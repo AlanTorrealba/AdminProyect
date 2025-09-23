@@ -17,7 +17,6 @@ const usePedidos = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log("response", response.data.data);
       setPedidos(response.data.data);
     } catch (error) {
       setError(error);
@@ -57,11 +56,15 @@ const usePedidos = () => {
     fetchPedidos();
   };
   const deletePedidos = async (pedido) => {
-    const id = pedido.pedido_id;
+    const id = pedido.id;
     setLoading(true);
     setError(null);
     try {
-      const response = await axios.delete(`${baseUrl}/${id}`);
+      const response = await axios.delete(`${baseUrl}/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       return response.data;
     } catch (error) {
       setError(error);
@@ -70,12 +73,15 @@ const usePedidos = () => {
     }
   };
   const reciclarPedidos = async (pedido) => {
-    const id = pedido.pedido_id;
+    const id = pedido.id;
     setLoading(true);
     setError(null);
     try {
-      const response = await axios.patch(`${baseUrl}/${id}`, { data: pedido });
-
+      const response = await axios.patch(`${baseUrl}/reciclar/${id}`,{}, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        }
+      });
       return response.data;
     } catch (error) {
       setError(error);

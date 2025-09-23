@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState, useEffect } from 'react';
-let baseUrl = "http://localhost:3000/api/products";
+let baseUrl = "http://localhost:3000/servicios";
 const useProducts = () => {
     const [products, setProductos] = useState([]);
     const [error, setError] = useState(null);
@@ -9,7 +9,11 @@ const useProducts = () => {
     useEffect(() => {
       const fetchData = async () => {
         try {
-          const response = await axios.get(baseUrl);
+          const response = await axios.get(baseUrl, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+            }
+          });
           console.log(response)
           setProductos(response.data);
           setLoading(false);
