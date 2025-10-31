@@ -4,7 +4,7 @@ import Swal from "sweetalert2";
 import usePedidosdetalles from "../hooks/usePedidosdetalles";
 import { useForm } from "react-hook-form";
 import {  useState, useMemo } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import Toast from "../utils/Toast";
 import {
   Table,
@@ -22,6 +22,7 @@ import {
 } from "@nextui-org/react";
 import ModalDetalle from "./ModalDetalle";
 function Detalle() {
+  const navigate = useNavigate();
   const {
     reset,
     register,
@@ -116,16 +117,15 @@ function Detalle() {
             <b>Detalles del pedido {detalleid}</b>
           </h2>
           <div>
-            <Link to={`/pedidos`}>
-              <Button
-                color="primary"
-                variant="solid"
-                className="mb-1 mr-3"
-              >
-                <FaRecycle />
-                Volver
-              </Button>
-            </Link>
+           <Button
+              color="primary"
+              variant="solid"
+              className="mb-1 mr-3"
+              onClick={() => navigate("/pedidos")}
+            >
+              <FaRecycle />
+              Volver
+            </Button>
             <Button
               onPress={onOpen}
               color="primary"

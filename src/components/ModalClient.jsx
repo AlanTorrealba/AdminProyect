@@ -11,6 +11,9 @@ import {
   Input,
   Select,
   SelectItem,
+  Autocomplete,
+  AutocompleteSection,
+  AutocompleteItem,
 } from "@nextui-org/react";
 
 function ModalClient({
@@ -25,8 +28,6 @@ function ModalClient({
 }) {
   const { cliente } = useClients();
   const { repartidor } = useRepartidor();
-  console.log("pedido", pedido);
-  console.log("evento", evento);
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -36,6 +37,7 @@ function ModalClient({
       console.log(error);
     }
   };
+  
 
   return (
     <div>
@@ -44,31 +46,38 @@ function ModalClient({
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1">
-                {evento ? "Editar"  : "Crear"} pedido { evento ? "- N° " + pedido.pedido_id : ""}
+                {evento ? "Editar" : "Crear"} pedido{" "}
+                {evento ? "- N° " + pedido.pedido_id : ""}
               </ModalHeader>
               <ModalBody>
                 <form onSubmit={handleSubmit}>
-                  <Select
+                  <Autocomplete
                     {...register("cliente")}
                     label="Cliente"
                     placeholder="Seleccione un cliente"
                     variant="bordered"
-                     defaultSelectedKeys= {evento ? (pedido?.cliente_id) : ""}
+                    defaultSelectedKeys={evento ? pedido?.cliente_id : ""}
+                    scrollShadowProps={{
+                      isEnabled: true,
+                    }}
+                    className="max-h-24"
                   >
                     {cliente.map((cliente) => (
-                      <SelectItem
-                        key={cliente.cliente_id}
-                        value={cliente.cliente_id}
+                      <AutocompleteItem
+                        key={cliente.id}
+                        value={cliente.id}
+                        textValue={`${cliente.nombre} ${cliente.cedula}`}
                       >
-                        {cliente.nombre}
-                      </SelectItem>
+                        {cliente.nombre} {cliente.cedula}
+                      </AutocompleteItem>
                     ))}
-                  </Select>
+                  </Autocomplete>
                   <Select
-                    {...register("repartidor")}
-                    label="Repartidor"
-                    placeholder="Seleccione un repartidor"
+                    {...register("vehiculo")}
+                    label="Vehiculo"
+                    placeholder="Seleccione un vehiculo"
                     variant="bordered"
+                    className="mt-4"
                   >
                     {repartidor.map((repartidor) => (
                       <SelectItem

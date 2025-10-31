@@ -20,7 +20,7 @@
   import { Link } from "react-router-dom";
 
   import ModalClient from "./ModalClient";
-
+  import Formulario from "./Formulario";
   function Pedidos() {
     const {
       reset,
@@ -112,13 +112,14 @@
       onOpen()
     }
     return (
-      <div className="flex flex-row flex-wrap ml-10 justify-center items-center">
+      <div className="flex flex-row flex-wrap  justify-center items-center">
         <div className="flex flex-wrap overflow-hidden"></div>
         <div className="m-10 w-full">
           <div className="flex flex-row justify-between">
             <h2>
               <b>Listado de Pedidos</b>
             </h2>
+            {/* <Formulario /> */}
             <Button
               onPress={handleOpen}
               color="primary"
