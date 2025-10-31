@@ -9,7 +9,7 @@ export function AsideBar({ children }) {
 
   return (
     <aside className="h-screen">
-      <nav className="h-full flex flex-col shadow-[0_35px_60px_-15px_rgba(0,0,0,0.8)] bg-sky-700">
+      <nav className="h-full flex flex-col shadow-[0_35px_60px_-15px_rgba(0,0,0,0.2)] bg-sky-700">
         <div className="p-4 pb-2 flex justify-end items-center">
           {/* <img
             src="/leon2.jpg"

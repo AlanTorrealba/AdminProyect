@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-
-const baseUrl = "http://localhost:3000/citas";
+const API_BASE_URL = import.meta.env.VITE_API_URL;
+const baseUrl = `${API_BASE_URL}/citas`;
 const token = localStorage.getItem("token");
 const usePedidos = () => {
   const [pedidos, setPedidos] = useState([]);
