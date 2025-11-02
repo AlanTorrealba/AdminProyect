@@ -19,6 +19,7 @@ import {
   Select,
   SelectItem
 } from "@nextui-org/react";
+import DashboardTanques from './DashboardTanques';
 
 
 const Dashboard = () => {
@@ -141,7 +142,7 @@ const Dashboard = () => {
         {/* <h1 className="text-4xl font-bold text-foreground mb-2">Dashboard Autolavado</h1> */}
         {/* <p className="text-default-500">Panel de control y estadísticas del sistema</p> */}
       </div>
-
+      {/* <DashboardTanques/> */}
       {/* Selector de tiempo */}
       <div className="mb-6">
         <ButtonGroup variant="flat">

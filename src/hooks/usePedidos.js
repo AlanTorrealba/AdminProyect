@@ -7,7 +7,7 @@ const usePedidos = () => {
   const [pedidos, setPedidos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  
   const fetchPedidos = async () => {
     setLoading(true);
     setError(null);
@@ -18,6 +18,7 @@ const usePedidos = () => {
         },
       });
       setPedidos(response.data.data);
+     
     } catch (error) {
       setError(error);
     } finally {

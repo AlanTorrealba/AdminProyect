@@ -1,6 +1,5 @@
 import React from "react";
 import useClients from "../hooks/useClients";
-import useRepartidor from "../hooks/useRepartidor";
 import {
   Button,
   Modal,
@@ -26,8 +25,8 @@ function ModalClient({
   evento,
   pedido,
 }) {
-  const { cliente } = useClients();
-  const { repartidor } = useRepartidor();
+  const { cliente, vehiculos } = useClients();
+  const [vehiculosFiltrados, setVehiculosFiltrados] = React.useState([]);
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -37,11 +36,34 @@ function ModalClient({
       console.log(error);
     }
   };
-  
+
+  const handlerSelect = (value) => {
+    const clienteSeleccionado = Number(value);
+    const filtrados = vehiculos.filter(
+      (vehiculos) => vehiculos.clienteId === clienteSeleccionado
+    );
+    if (filtrados.length === 0) {
+      setVehiculosFiltrados([]);
+      return;
+    }
+    setVehiculosFiltrados(filtrados);
+  };
 
   return (
     <div>
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="top-center">
+      <Modal
+        isOpen={isOpen}
+        size={"5xl"}
+        onOpenChange={(open) => {
+          if (!open) {
+            setVehiculosFiltrados([]);
+          }
+          onOpenChange(open);
+        }}
+        backdrop={"blur"}
+        placement="top-center"
+        shouldCloseOnInteractOutside={true}
+      >
         <ModalContent>
           {(onClose) => (
             <>
@@ -56,11 +78,13 @@ function ModalClient({
                     label="Cliente"
                     placeholder="Seleccione un cliente"
                     variant="bordered"
-                    defaultSelectedKeys={evento ? pedido?.cliente_id : ""}
+                    defaultSelectedKeys={evento ? pedido?.clienteId : ""}
                     scrollShadowProps={{
                       isEnabled: true,
                     }}
                     className="max-h-24"
+                    onSelectionChange={handlerSelect}
+                    disablePortal
                   >
                     {cliente.map((cliente) => (
                       <AutocompleteItem
@@ -72,32 +96,24 @@ function ModalClient({
                       </AutocompleteItem>
                     ))}
                   </Autocomplete>
-                  <Select
+                  <Autocomplete
                     {...register("vehiculo")}
                     label="Vehiculo"
-                    placeholder="Seleccione un vehiculo"
+                    placeholder={
+                      vehiculosFiltrados.length === 0
+                        ? "No hay vehículos para este cliente"
+                        : "Selecciona un vehículo"
+                    }
+                    isDisabled={vehiculosFiltrados.length === 0}
                     variant="bordered"
                     className="mt-4"
                   >
-                    {repartidor.map((repartidor) => (
-                      <SelectItem
-                        key={repartidor.repartidor_id}
-                        value={repartidor.repartidor_id}
-                      >
-                        {repartidor.nombre}
-                      </SelectItem>
+                    {vehiculosFiltrados.map((vehiculos) => (
+                      <AutocompleteItem key={vehiculos.id} value={vehiculos.id}>
+                        {vehiculos.placa}
+                      </AutocompleteItem>
                     ))}
-                  </Select>
-
-                  {/* <Input
-                    {...register("usuario")}
-                    placeholder="Seleccione el usuario"
-                    type="text"
-                    variant="bordered"
-                    value={window.localStorage.getItem("user")}
-                    isDisabled
-                    className="invisible"
-                  /> */}
+                  </Autocomplete>
                 </form>
               </ModalBody>
               <ModalFooter>
