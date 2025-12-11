@@ -2,7 +2,7 @@
   import { FaTrash, FaEdit, FaList, FaPlus, FaRecycle } from "react-icons/fa";
   import usePedidos from "../hooks/usePedidos";
   import Toast from "../utils/Toast";
-  import { useForm } from "react-hook-form";
+  import { useForm, Controller } from "react-hook-form";
   import {
     Table,
     TableHeader,
@@ -23,6 +23,7 @@
   import Formulario from "./Formulario";
   function Pedidos() {
     const {
+      control,
       reset,
       register,
       handleSubmit,
@@ -53,7 +54,16 @@
 
     // ...
     const onSubmit = handleSubmit(async (data) => {
-      const pedidosResult = await postData(data);      
+      const payload = {
+        clienteId: Number(data.cliente),
+        vehiculoId: Number(data.vehiculo),
+        tarifaId: 1,
+        estatusId: 1,
+        fecha: new Date().toISOString().split('T')[0],
+        detalles: data.servicios?.map(item => ({servicioId: Number(item.id), precio: Number(item.precio)})) || [],
+      };
+
+      const pedidosResult = await postData(payload);      
       pedidosResult.success
         ? (reset(),
           onClose(),
@@ -71,8 +81,8 @@
             background: "#ffff",
           }));
     });
-    const handlerDelete = async (id) => {
-      const result = await deletePedidos(id);
+    const handlerDelete = async (pedido) => {
+      const result = await deletePedidos(pedido);
       result
         ? (refetchPedidos(),
           Toast.fire({
@@ -119,7 +129,6 @@
             <h2>
               <b>Listado de Pedidos</b>
             </h2>
-            {/* <Formulario /> */}
             <Button
               onPress={handleOpen}
               color="primary"
@@ -254,6 +263,8 @@
           register={register}
           evento={event}
           pedido={pedido}
+          Controller={Controller}
+          control={control}
         />
       </div>
     );

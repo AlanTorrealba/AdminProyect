@@ -30,23 +30,25 @@ const usePedidos = () => {
     fetchPedidos();
   }, []);
 
-  const postData = async (data) => {
-   data["usuario"] = window.localStorage.getItem("user") 
+  const postData = async (payload) => {
+  //  payload["usuario"] = window.localStorage.getItem("user") 
     setLoading(true);
     try {
-      const response = await axios.post(baseUrl, {
-        params: data,
+      const response = await axios.post(baseUrl, payload , {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
 
       if (response.data.success) {
         return response.data;
       } else {
-        console.error("Error en la inserción:", response.data.message);
+        // console.error("Error en la inserción:", response.data.message);
         return response.data;
       }
     } catch (error) {
       setError(error);
-      console.error("Error en la solicitud:", error);
+      // console.error("Error en la solicitud:", error);
       return error;
     } finally {
       setLoading(false);

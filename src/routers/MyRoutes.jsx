@@ -6,6 +6,7 @@ import PrivateRoute from '../components/PrivateRoute';
 import Login from '../components/Login';
 import Detalle from '../components/Detalle';
 import Graficas from '../components/Graficas';
+import PedidosVista from '../components/PedidosVista';
 function MyRoutes() {
   return (
    <Routes>
@@ -14,6 +15,7 @@ function MyRoutes() {
         <Route path='/home' element={<Home/>}></Route>
         <Route path='/grafic' element={<Graficas/>}></Route>
         <Route path='/pedidos' element={<Pedidos/>}></Route>
+        <Route path='/pedidos2' element={<PedidosVista/>}></Route>
         <Route path='/pedidos/:detalleid' element={<Detalle/>}></Route>
      </Route>
    </Routes>

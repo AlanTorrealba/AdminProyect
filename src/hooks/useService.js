@@ -3,12 +3,12 @@ import { useState, useEffect } from "react";
 const API_BASE_URL = import.meta.env.VITE_API_URL;
 console.log(API_BASE_URL);
 const token = localStorage.getItem("token");
-let baseUrl = `${API_BASE_URL}/client`;
-const useClients = () => {
-  const [clientes, setClientes] = useState([]);
+let baseUrl = `${API_BASE_URL}/servicios`;
+const useServices = () => {
+  const [servicios, setServicios] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [vehiculo, setVehiculo] = useState([]);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -18,16 +18,8 @@ const useClients = () => {
           },
         });
         const data = response.data.data;
-        setClientes(data);
-        const vehiculosUnicos = [
-          ...new Map(
-            data
-              .flatMap((c) => c.vehiculos)
-              .filter((v) => v.isActive)
-              .map((v) => [v.id, v])
-          ).values(),
-        ];
-        setVehiculo(vehiculosUnicos);
+        setServicios(data);
+        console.log(data)
       } catch (error) {
         setError(error);
       } finally {
@@ -37,7 +29,7 @@ const useClients = () => {
 
     fetchData();
   }, []);
-  return { clientes, loading, vehiculo, error };
+  return { servicios, loading, error };
 };
 
-export default useClients;
+export default useServices;
